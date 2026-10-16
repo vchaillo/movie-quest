@@ -1,3 +1,4 @@
+import {verifyFirebaseToken} from './firebase-auth.js';
 // Movie Quest TMDB proxy — Cloudflare Workers (no Node server required).
 const ALLOWED_ORIGIN = 'https://vchaillo.github.io';
 const TMDB = 'https://api.themoviedb.org/3';
@@ -5,13 +6,16 @@ const json = (body, status=200, extra={}) => new Response(JSON.stringify(body), 
 export default {
  async fetch(request, env, ctx) {
   const origin=request.headers.get('Origin');
-  const cors={'Access-Control-Allow-Origin':ALLOWED_ORIGIN,'Access-Control-Allow-Methods':'GET, OPTIONS','Access-Control-Allow-Headers':'Content-Type','Vary':'Origin'};
+  const cors={'Access-Control-Allow-Origin':ALLOWED_ORIGIN,'Access-Control-Allow-Methods':'GET, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization','Vary':'Origin'};
   if(request.method==='OPTIONS') return new Response(null,{status:204,headers:cors});
   if(request.method!=='GET')return json({error:'Method not allowed'},405,cors);
   if(origin && origin!==ALLOWED_ORIGIN)return json({error:'Origin not allowed'},403,cors);
   const u=new URL(request.url), parts=u.pathname.split('/').filter(Boolean);
   if(u.pathname==='/health')return json({ok:true},200,cors);
   if(!env.TMDB_READ_TOKEN)return json({error:'TMDB secret not configured'},503,cors);
+  const authorization=request.headers.get('Authorization')||'';
+  if(!authorization.startsWith('Bearer '))return json({error:'Authentication required'},401,cors);
+  try { await verifyFirebaseToken(authorization.slice(7)); } catch(e) { return json({error:'Invalid or expired Firebase session'},401,cors); }
   try {
   let endpoint='',params=new URLSearchParams({language:'fr-FR'});
   if(u.pathname==='/api/search'){
