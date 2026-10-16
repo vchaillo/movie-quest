@@ -1,0 +1,9 @@
+{
+  "name": "movie-quest",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node --check firebase-app.js && node --check worker/src/index.js && node --check stats.js"
+  }
+}
