@@ -98,3 +98,23 @@ header #mainNav.mobile-open:not([hidden]){opacity:1;visibility:visible;pointer-e
 #mainNav .mobile-menu-links{display:flex;align-items:center;gap:4px}
 #mainNav[hidden]{display:none!important}
 @media(max-width:850px){#mainNav .mobile-menu-links{align-items:stretch;gap:0}}
+
+/* Header: use account accent for navigation, without decorative slogans */
+header nav button[data-tab]:hover,header nav button[data-tab].active{color:var(--accent)}
+header nav button[data-tab]::after{background:var(--accent)}
+.icon-only{display:inline-flex!important;align-items:center!important;justify-content:center!important;vertical-align:middle;line-height:1!important;padding:0!important}
+.icon-only svg{display:block;flex:none;width:19px;height:19px;pointer-events:none}
+.credit-link{display:inline;border:0;background:none;padding:0;color:var(--accent);font:inherit;text-decoration:none;cursor:pointer;transition:opacity .2s}
+.credit-link:hover{text-decoration:underline;opacity:.85}
+.film-directors{display:block;font-size:12px;line-height:1.5}
+.credit-line{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;margin:16px 0}
+.credit-line strong{color:#a4a6ae;font-size:13px}
+.credits-section{margin:40px 0}
+.credits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:16px;margin-top:18px}
+.credit-person{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;padding:0 0 12px;background:#1c1d22;border:1px solid #34343b;border-radius:10px;overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s}
+.credit-person:hover{transform:translateY(-4px);border-color:var(--accent)}
+.credit-person img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.credit-person strong,.credit-person small{padding:0 11px}
+.credit-person strong{font-size:13px}
+.credit-person small{color:#9fa0a8;font-size:11px}
+@media(max-width:850px){#mainNav .mobile-menu-links button[data-tab].active,#mainNav .mobile-menu-links button[data-tab]:hover{color:var(--accent)}#mainNav .mobile-menu-links button[data-tab]::after{color:var(--accent)}.mobile-menu-intro,.mobile-menu-footer{display:none!important}header #mainNav{background:radial-gradient(ellipse at 80% 15%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 48%),linear-gradient(155deg,#17191e,#0b0d10)}}
