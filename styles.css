@@ -175,3 +175,24 @@ header nav button[data-tab]::after{background:var(--accent)}
 .rating-stars-fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:var(--accent)}
 .rating-value{color:inherit;font-size:13px}
 @media(prefers-reduced-motion:reduce){.mq-entity,.mq-tile,.mq-row,.mq-art img{transition:none!important}}
+
+/* Card-deck interaction — deliberate, smooth lift rather than hover snap */
+.mq-grid{perspective:1100px}
+.mq-grid .mq-tile{position:relative;transform:translate3d(0,0,0) rotate(0deg)!important;transform-origin:center 92%;transition:transform 780ms cubic-bezier(.22,1,.36,1),box-shadow 780ms cubic-bezier(.22,1,.36,1)!important;box-shadow:0 2px 8px rgba(0,0,0,.08)!important;border-color:#303034!important}
+.mq-grid .mq-tile:hover{transform:translate3d(0,-10px,0) rotate(-.55deg)!important;box-shadow:0 20px 32px rgba(0,0,0,.23)!important;border-color:#303034!important;z-index:2}
+.mq-grid .mq-tile .mq-art img{transform:scale(1)!important;transition:transform 900ms cubic-bezier(.22,1,.36,1)!important}
+.mq-grid .mq-tile:hover .mq-art img{transform:scale(1.025)!important}
+.mq-table .mq-row{position:relative;transform:none!important;box-shadow:none!important;border-bottom-color:#303034!important;transition:background-color 300ms ease,padding-left 400ms cubic-bezier(.22,1,.36,1)!important}
+.mq-table .mq-row:hover{transform:none!important;box-shadow:none!important;border-color:#303034!important;border-bottom-color:#303034!important;background:color-mix(in srgb,var(--accent) 6%,#17181b)!important;padding-left:20px}
+.mq-table .mq-row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:0;transform:scaleY(.45);transform-origin:center;transition:opacity 330ms ease,transform 400ms cubic-bezier(.22,1,.36,1)}
+.mq-table .mq-row:hover::before{opacity:1;transform:scaleY(1)}
+header nav button[data-tab]{transition:transform 650ms cubic-bezier(.22,1,.36,1),color 330ms ease!important}
+header nav button[data-tab]:hover{transform:translateY(-3px)!important}
+.explore-view-switch{display:flex;justify-content:flex-end;min-height:45px;align-items:center}
+.explore-view-switch .mode-switch{margin-left:auto}
+.following-controls,.filmography-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin:16px 0 22px}
+.following-controls .mode-switch,.filmography-heading .mode-switch{margin-left:auto}
+.person-filmography{margin-top:36px}
+.filmography-heading h2{margin:6px 0}
+.filmography-heading p{margin:0}
+@media(prefers-reduced-motion:reduce){.mq-grid .mq-tile,.mq-grid .mq-tile .mq-art img,.mq-table .mq-row,header nav button[data-tab]{transition:none!important}.mq-grid .mq-tile:hover,.mq-table .mq-row:hover,header nav button[data-tab]:hover{transform:none!important}}
