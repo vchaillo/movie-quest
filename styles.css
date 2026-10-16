@@ -60,3 +60,6 @@ header nav button[data-tab]:hover::after,header nav button[data-tab].active::aft
 @media(max-width:850px){#mainNav button[data-tab]::after{left:15px;right:auto;width:36px}#mainNav button[data-tab].active{background:transparent;border-color:transparent}}
 @media(max-width:520px){.mq-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mq-meta{padding:11px}.mq-table .mq-meta{gap:5px}.mq-table .mq-meta h3{min-width:100%;font-size:14px}.mq-table .mq-row{gap:4px}.mq-table .mq-actions{gap:0;padding-right:7px}.mq-actions{gap:3px}.icon-only{width:32px;height:32px;min-width:32px}}
 @media(prefers-reduced-motion:reduce){.mq-entity{animation:none;transition:none}.mq-art img,.icon-only,header nav button[data-tab]::after{transition:none}}
+
+/* Navigation: consistent green interactive links */
+header nav button[data-tab]:hover,header nav button[data-tab].active{color:#77c79a}header nav button[data-tab]::after{background:#77c79a}
