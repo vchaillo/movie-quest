@@ -209,3 +209,24 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .following-controls .filter-chips{display:flex;align-items:center;gap:6px}
 .following-controls .mode-switch{margin-left:auto}
 @media(max-width:700px){.following-controls .search-field{max-width:none;flex-basis:100%}}
+
+/* Card hover fix: mq-appear used animation-fill-mode:both, which held transform
+   and prevented the transition from interpolating. Keep only vertical motion. */
+.mq-grid .mq-tile{
+  animation:none!important;
+  transform:translateY(0)!important;
+  transform-origin:center center;
+  transition:transform 650ms cubic-bezier(.22,.61,.36,1),box-shadow 650ms ease!important;
+}
+.mq-grid .mq-tile:hover{
+  transform:translateY(-9px)!important;
+  box-shadow:0 18px 30px rgba(0,0,0,.23)!important;
+}
+.mq-grid .mq-tile:not(:hover){transform:translateY(0)!important}
+@media(prefers-reduced-motion:reduce){
+  .mq-grid .mq-tile,.mq-grid .mq-tile:hover,.mq-grid .mq-tile:not(:hover){
+    animation:none!important;
+    transition:none!important;
+    transform:none!important;
+  }
+}
