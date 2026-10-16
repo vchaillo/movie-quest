@@ -269,3 +269,18 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .credits-grid.mq-grid{margin-top:0}
 .person-filmography .unified-filters{margin-top:20px}
 @media(max-width:950px){.unified-filters,.following-controls.unified-filters,.explore-toolbar{flex-wrap:wrap}.unified-filters .search-field{flex:1 1 100%}.unified-filters .mode-switch,.unified-filters .explore-view-switch{margin-left:auto}}
+
+/* Distribution in table mode uses the same compact row treatment. */
+.credits-grid.mq-table{display:flex;flex-direction:column;gap:7px;margin:14px 0 28px}
+.credits-grid.mq-table .credit-person.mq-row{
+ display:flex;flex-direction:row;align-items:center;gap:12px;min-height:70px;
+ width:100%;padding:7px 13px;border:1px solid #303034;border-radius:9px;
+ background:#1c1d22;box-shadow:none;transform:none;
+ transition:background-color 300ms ease,padding-left 400ms cubic-bezier(.22,1,.36,1)!important;
+}
+.credits-grid.mq-table .credit-person.mq-row:hover{
+ transform:none!important;box-shadow:none!important;border-color:#303034!important;
+ background:color-mix(in srgb,var(--accent) 6%,#17181b)!important;padding-left:20px;
+}
+.credits-grid.mq-table .credit-person.mq-row img{width:42px;height:56px;aspect-ratio:auto;object-fit:cover;border-radius:5px}
+.credits-grid.mq-table .credit-person.mq-row strong,.credits-grid.mq-table .credit-person.mq-row small{padding:0}
