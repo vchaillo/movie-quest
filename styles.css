@@ -142,3 +142,16 @@ header nav button[data-tab]::after{background:var(--accent)}
 .release-person-search input:focus{outline:1px solid var(--accent);border-color:var(--accent)}
 .movie-facts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;color:var(--accent);font-size:14px}
 @media(prefers-reduced-motion:reduce){.mq-entity,.random-film{transition:none}}
+
+/* Shared card motion: no accent-colored border, smooth lift in both directions */
+.mq-entity,.mq-tile,.mq-row{transition:transform 240ms cubic-bezier(.22,.7,.25,1),box-shadow 240ms ease,background-color 240ms ease!important}
+.mq-entity:hover,.mq-tile:hover{transform:translate3d(0,-5px,0)!important;border-color:#33343a!important;box-shadow:0 12px 26px rgba(0,0,0,.3)!important}
+.mq-table .mq-row:hover{transform:translate3d(0,-3px,0)!important;border-color:transparent!important;box-shadow:0 7px 18px rgba(0,0,0,.2)!important}
+.mq-entity:not(:hover){transform:translate3d(0,0,0)}
+.person-profile-hero{display:flex;align-items:flex-start;gap:25px}
+.person-profile-photo{width:160px;max-width:32%;aspect-ratio:2/3;object-fit:cover;border-radius:12px;flex-shrink:0}
+.person-profile-content{min-width:0;flex:1}
+.person-profile-facts{display:flex;flex-wrap:wrap;gap:9px 17px;color:var(--accent);font-size:13px;margin:12px 0}
+.person-biography{max-width:75ch;line-height:1.7;opacity:.85}
+@media(max-width:540px){.person-profile-hero{gap:14px}.person-profile-photo{width:100px}.person-profile-facts{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.mq-entity,.mq-tile,.mq-row{transition:none!important;transform:none!important}}
