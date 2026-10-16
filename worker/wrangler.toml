@@ -1,0 +1,1 @@
+name = "movie-quest-api"\nmain = "src/index.js"\ncompatibility_date = "2026-10-01"\nworkers_dev = true\n
