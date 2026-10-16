@@ -254,3 +254,18 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .person-filmography .filmography-controls .filter-chips{display:flex;gap:6px;flex-wrap:wrap}
 @media(max-width:520px){.credits-grid.mq-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 @media(prefers-reduced-motion:reduce){.credits-grid .credit-person.mq-tile,.credits-grid .credit-person.mq-tile:hover{transition:none!important;transform:none!important}}
+
+/* Shared exploration toolbar across every collection */
+.unified-filters,.following-controls.unified-filters,.explore-toolbar{
+ display:flex;align-items:center;gap:12px;flex-wrap:nowrap;margin:18px 0 22px;
+}
+.unified-filters .search-field{flex:1 1 260px;min-width:170px;max-width:none}
+.unified-filters .search-field input{width:100%}
+.unified-filters .filter-chips{display:flex;align-items:center;gap:6px;flex:0 0 auto;flex-wrap:wrap}
+.unified-filters .mode-switch,.unified-filters .explore-view-switch{display:flex;align-items:center;justify-content:flex-end;flex:0 0 auto;margin:0 0 0 auto;min-height:0}
+.unified-filters .explore-view-switch .mode-switch{margin:0}
+.unified-filters .release-person-inline{flex:0 1 170px;min-width:125px;width:170px}
+.credits-section .unified-filters{margin-top:18px}
+.credits-grid.mq-grid{margin-top:0}
+.person-filmography .unified-filters{margin-top:20px}
+@media(max-width:950px){.unified-filters,.following-controls.unified-filters,.explore-toolbar{flex-wrap:wrap}.unified-filters .search-field{flex:1 1 100%}.unified-filters .mode-switch,.unified-filters .explore-view-switch{margin-left:auto}}
