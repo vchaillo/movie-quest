@@ -4,7 +4,7 @@ test('health works without TMDB secret',async()=>{const r=await worker.fetch(req
 test('missing secret rejects TMDB requests',async()=>{const r=await worker.fetch(req('/api/search?q=film'),{});assert.equal(r.status,503)});
 test('cross-origin requests are rejected',async()=>{const r=await worker.fetch(req('/api/search?q=film',{headers:{Origin:'https://attacker.example'}}),{TMDB_READ_TOKEN:'dummy'});assert.equal(r.status,403)});
 test('preflight returns allowed origin',async()=>{const r=await worker.fetch(req('/api/search',{method:'OPTIONS'}),{});assert.equal(r.status,204);assert.equal(r.headers.get('Access-Control-Allow-Origin'),'https://vchaillo.github.io')});
-test('invalid search type is rejected',async()=>{const r=await worker.fetch(req('/api/search?q=test&type=unknown'),{TMDB_READ_TOKEN:'dummy'});assert.equal(r.status,400)});
+test('unauthenticated requests cannot probe search routes',async()=>{const r=await worker.fetch(req('/api/search?q=test&type=unknown'),{TMDB_READ_TOKEN:'dummy'});assert.equal(r.status,401)});
 
 test('TMDB endpoints reject requests without Firebase authorization',async()=>{const r=await worker.fetch(req('/api/search?q=film'),{TMDB_READ_TOKEN:'dummy'});assert.equal(r.status,401);assert.equal((await r.json()).error,'Authentication required')});
 test('TMDB endpoints reject invalid Firebase tokens',async()=>{const r=await worker.fetch(req('/api/search?q=film',{headers:{Authorization:'Bearer invalid'}}),{TMDB_READ_TOKEN:'dummy'});assert.equal(r.status,401)});
