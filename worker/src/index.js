@@ -10,6 +10,7 @@ export default {
   if(request.method!=='GET')return json({error:'Method not allowed'},405,cors);
   if(origin && origin!==ALLOWED_ORIGIN)return json({error:'Origin not allowed'},403,cors);
   if(!env.TMDB_READ_TOKEN)return json({error:'TMDB secret not configured'},503,cors);
+  try {
   const u=new URL(request.url), parts=u.pathname.split('/').filter(Boolean);
   if(u.pathname==='/health')return json({ok:true},200,cors);
   let endpoint='',params=new URLSearchParams({language:'fr-FR'});
