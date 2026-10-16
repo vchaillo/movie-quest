@@ -40,8 +40,10 @@ export default {
    const id=parts[2];if(!/^\d{1,12}$/.test(id))return json({error:'Invalid person ID'},400,cors);
    const role=u.searchParams.get('role')==='director'?'director':'actor';
    const [profile,credits]=await Promise.all([tmdb('/person/'+id,{},env),tmdb('/person/'+id+'/movie_credits',{},env)]);
-   const items=role==='director'?(credits.crew||[]).filter(m=>m.job==='Director'):(credits.cast||[]);
-   const movies=[...new Map(items.filter(m=>m.id&&m.title&&m.release_date).map(m=>[m.id,m])).values()].sort((a,b)=>b.release_date.localeCompare(a.release_date));
+   const cast=(credits.cast||[]).filter(m=>m.id&&m.title&&m.release_date);
+   const directed=(credits.crew||[]).filter(m=>m.job==='Director'&&m.id&&m.title&&m.release_date);
+   const byId=new Map();for(const m of cast)byId.set(m.id,{...m,person_roles:['actor']});for(const m of directed){const existing=byId.get(m.id);byId.set(m.id,{...existing,...m,person_roles:existing?['actor','director']:['director']})}
+   const movies=[...byId.values()].sort((a,b)=>b.release_date.localeCompare(a.release_date));
    return json({profile,movies},200,cors);
   }
   if(parts.length===3&&parts[0]==='api'&&parts[1]==='movie'&&/^\d{1,12}$/.test(parts[2])){
