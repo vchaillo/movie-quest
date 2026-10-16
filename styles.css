@@ -155,3 +155,23 @@ header nav button[data-tab]::after{background:var(--accent)}
 .person-biography{max-width:75ch;line-height:1.7;opacity:.85}
 @media(max-width:540px){.person-profile-hero{gap:14px}.person-profile-photo{width:100px}.person-profile-facts{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.mq-entity,.mq-tile,.mq-row{transition:none!important;transform:none!important}}
+
+/* Softer, less abrupt hover movement */
+.mq-entity,.mq-tile,.mq-row{transition:transform 460ms cubic-bezier(.25,.1,.25,1),box-shadow 460ms ease,background-color 460ms ease!important;will-change:auto}
+.mq-entity:hover,.mq-tile:hover{transform:translate3d(0,-3px,0)!important;box-shadow:0 9px 23px rgba(0,0,0,.2)!important;border-color:#33343a!important}
+.mq-table .mq-row:hover{transform:translate3d(0,-2px,0)!important;box-shadow:0 5px 14px rgba(0,0,0,.16)!important}
+.mq-entity:hover .mq-art img{transform:scale(1.025)}
+.mq-art img{transition:transform 600ms cubic-bezier(.25,.1,.25,1)}
+.suggestion-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.suggestion-heading h2{margin-bottom:6px}
+.suggestion-heading p{margin:0 0 12px}
+.suggestion-heading .mode-switch{margin:0 0 3px auto}
+.suggestion-heading .random-film{display:inline-flex;align-items:center;gap:12px}
+.movie-facts{display:flex;flex-direction:column;align-items:flex-start;gap:9px;color:inherit}
+.movie-duration{font-size:14px;color:inherit}
+.movie-rating{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rating-stars{position:relative;display:inline-block;white-space:nowrap;font-size:24px;letter-spacing:2px;line-height:1.15}
+.rating-stars-base{color:#77777c}
+.rating-stars-fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:var(--accent)}
+.rating-value{color:inherit;font-size:13px}
+@media(prefers-reduced-motion:reduce){.mq-entity,.mq-tile,.mq-row,.mq-art img{transition:none!important}}
