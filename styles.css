@@ -9,3 +9,6 @@
 
 /* Private application login gate */
 [hidden]{display:none!important}.auth-screen{min-height:calc(100vh - 160px);display:flex;align-items:center;justify-content:center;padding:35px 0}.auth-panel{max-width:640px;width:100%;text-align:center;padding:65px 30px;background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 65%),#191a1e;border:1px solid #34343b;border-radius:12px}.auth-panel h1{font-size:clamp(35px,5vw,62px)}.auth-panel p{margin:20px auto 30px;max-width:440px}.auth-panel button{font-weight:700;padding:14px 25px}
+
+/* Avatar-only account trigger */
+.account-trigger{display:block;background:transparent;border:0;border-radius:50%;padding:0;line-height:0;box-shadow:none;cursor:pointer}.account-trigger:hover{background:transparent;border:0;transform:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 45%,transparent)}.account-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.account-avatar,.account-initials{width:39px;height:39px}.account-wrap{line-height:normal}
