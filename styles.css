@@ -18,3 +18,11 @@
 @media(max-width:850px){header{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:14px 5%}.logo-link{grid-column:1;grid-row:1;font-size:21px}.mobile-nav-toggle:not([hidden]){display:flex;grid-column:2;grid-row:1}#account{grid-column:3;grid-row:1;margin:0}#mainNav{grid-column:1/-1;grid-row:2;display:none;flex-direction:column;flex-wrap:nowrap;width:100%;padding:10px 0 3px;border-top:1px solid #303037}#mainNav.mobile-open:not([hidden]){display:flex}#mainNav button{width:100%;text-align:left;padding:13px 15px;background:transparent;border-color:transparent}#mainNav button.active{background:color-mix(in srgb,var(--accent) 13%,#202127);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 25%,transparent)}#mainNav button:hover{background:#292a30}.account-menu{z-index:100}}
 @media(max-width:380px){.logo-link{font-size:18px}.mobile-nav-toggle{width:38px;height:38px}.account-avatar,.account-initials{width:36px;height:36px}}
 @media(prefers-reduced-motion:reduce){.mobile-nav-toggle span{transition:none}}
+
+/* First-paint boot gate: hide the entire app until auth + Firestore are ready */
+body.app-booting>header,body.app-booting>main,body.app-booting>footer{visibility:hidden}
+.boot-loader{display:none}
+body.app-booting .boot-loader{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;background:#101114;color:#d3d3d6;font-size:13px;letter-spacing:.09em}
+.boot-spinner{width:42px;height:42px;border:3px solid #34353b;border-top-color:#e7bc75;border-radius:50%;animation:boot-spin .85s linear infinite}
+@keyframes boot-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.boot-spinner{animation-duration:2.5s}}
