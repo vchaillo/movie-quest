@@ -93,3 +93,8 @@ header #mainNav.mobile-open:not([hidden]){opacity:1;visibility:visible;pointer-e
 @keyframes menu-reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:390px){.mobile-menu-footer{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){#mainNav.mobile-open .mobile-menu-intro,#mainNav.mobile-open .mobile-menu-links button,#mainNav.mobile-open .mobile-menu-footer{animation:none}}
+
+/* Keep desktop navigation horizontal and honor authentication visibility */
+#mainNav .mobile-menu-links{display:flex;align-items:center;gap:4px}
+#mainNav[hidden]{display:none!important}
+@media(max-width:850px){#mainNav .mobile-menu-links{align-items:stretch;gap:0}}
