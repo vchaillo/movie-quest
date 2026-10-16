@@ -18,6 +18,7 @@ export default {
   try { await verifyFirebaseToken(authorization.slice(7)); } catch(e) { return json({error:'Invalid or expired Firebase session'},401,cors); }
   try {
   let endpoint='',params=new URLSearchParams({language:'fr-FR'});
+  if(u.pathname==='/api/now-playing'){const data=await tmdb('/movie/now_playing',{region:'FR',page:'1'},env);return json({results:(data.results||[]).slice(0,40)},200,cors)}
   if(u.pathname==='/api/search'){
    const q=(u.searchParams.get('q')||'').trim().slice(0,100);
    if(!q)return json({results:[]},200,cors);
