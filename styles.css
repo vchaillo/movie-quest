@@ -26,3 +26,37 @@ body.app-booting .boot-loader{position:fixed;inset:0;z-index:9999;display:flex;f
 .boot-spinner{width:42px;height:42px;border:3px solid #34353b;border-top-color:#e7bc75;border-radius:50%;animation:boot-spin .85s linear infinite}
 @keyframes boot-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.boot-spinner{animation-duration:2.5s}}
+
+/* Movie Quest shared interactive entities */
+.mq-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:19px;margin:20px 0 32px}
+.mq-entity{position:relative;cursor:pointer;min-width:0;background:#1c1d22;border:1px solid #33343a;border-radius:12px;overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;animation:mq-appear .35s ease both}
+.mq-entity:hover,.mq-entity:focus-visible{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 12px 30px #0006;outline:none}
+.mq-art{aspect-ratio:3/4;overflow:hidden;background:#27282d;display:grid;place-items:center;font-size:40px;color:#777}
+.mq-art img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.mq-entity:hover .mq-art img{transform:scale(1.055)}
+.mq-meta{padding:15px 16px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.mq-meta h3{font-size:15px;line-height:1.4;margin:0;overflow-wrap:anywhere}
+.mq-meta small{color:#a5a5ae;font-size:12px;line-height:1.5}
+.mq-actions{display:flex;align-items:center;gap:9px;padding:0 14px 14px}
+.icon-only{display:inline-grid;place-items:center;width:34px;height:34px;min-width:34px;padding:0;border:1px solid transparent;border-radius:50%;background:transparent;color:#b8b8c0;font-size:22px;line-height:1;cursor:pointer;transition:color .2s ease,transform .2s ease,background .2s ease}
+.icon-only:hover,.icon-only:focus-visible{background:#ffffff14;color:var(--accent);transform:scale(1.12);outline:none}
+.icon-only.chosen{color:var(--accent)}
+.mode-switch{display:flex;justify-content:flex-end;gap:5px;margin:15px 0}
+.mode-switch .icon-only{border-radius:7px;width:39px;height:39px}
+.mq-table{display:flex;flex-direction:column;gap:0;margin:18px 0 30px;border:1px solid #34343b;border-radius:10px;overflow:hidden}
+.mq-table .mq-row{display:flex;align-items:center;gap:12px;min-height:65px;border:0;border-bottom:1px solid #34343b;border-radius:0;background:#1c1d22}
+.mq-table .mq-row:last-child{border-bottom:0}
+.mq-table .mq-row:hover,.mq-table .mq-row:focus-visible{transform:none;background:#292a30;box-shadow:inset 3px 0 var(--accent)}
+.mq-table .mq-meta{flex:1;flex-direction:row;align-items:center;gap:16px;flex-wrap:wrap}
+.mq-table .mq-meta h3{flex:1;min-width:140px}
+.mq-table .mq-actions{padding:0 14px 0 0;flex-shrink:0}
+.mq-person.mq-tile .mq-actions{position:absolute;right:6px;bottom:5px;padding:0}
+.mq-person.mq-tile .icon-only{background:#18191ddd;backdrop-filter:blur(6px)}
+@keyframes mq-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+header nav button[data-tab]{background:transparent;border:0;border-radius:0;position:relative;transition:color .2s ease;color:#c5c5cc}
+header nav button[data-tab]::after{content:'';position:absolute;left:12px;right:12px;bottom:3px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .23s ease}
+header nav button[data-tab]:hover,header nav button[data-tab].active{color:var(--accent);background:transparent}
+header nav button[data-tab]:hover::after,header nav button[data-tab].active::after{transform:scaleX(1)}
+@media(max-width:850px){#mainNav button[data-tab]::after{left:15px;right:auto;width:36px}#mainNav button[data-tab].active{background:transparent;border-color:transparent}}
+@media(max-width:520px){.mq-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mq-meta{padding:11px}.mq-table .mq-meta{gap:5px}.mq-table .mq-meta h3{min-width:100%;font-size:14px}.mq-table .mq-row{gap:4px}.mq-table .mq-actions{gap:0;padding-right:7px}.mq-actions{gap:3px}.icon-only{width:32px;height:32px;min-width:32px}}
+@media(prefers-reduced-motion:reduce){.mq-entity{animation:none;transition:none}.mq-art img,.icon-only,header nav button[data-tab]::after{transition:none}}
