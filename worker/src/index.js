@@ -9,10 +9,10 @@ export default {
   if(request.method==='OPTIONS') return new Response(null,{status:204,headers:cors});
   if(request.method!=='GET')return json({error:'Method not allowed'},405,cors);
   if(origin && origin!==ALLOWED_ORIGIN)return json({error:'Origin not allowed'},403,cors);
-  if(!env.TMDB_READ_TOKEN)return json({error:'TMDB secret not configured'},503,cors);
-  try {
   const u=new URL(request.url), parts=u.pathname.split('/').filter(Boolean);
   if(u.pathname==='/health')return json({ok:true},200,cors);
+  if(!env.TMDB_READ_TOKEN)return json({error:'TMDB secret not configured'},503,cors);
+  try {
   let endpoint='',params=new URLSearchParams({language:'fr-FR'});
   if(u.pathname==='/api/search'){
    const q=(u.searchParams.get('q')||'').trim().slice(0,100);
@@ -43,6 +43,10 @@ export default {
    try{return json(await tmdb('/movie/'+parts[2],{},env),200,cors)}catch(e){return json({error:'TMDB unavailable'},502,cors)}
   }
   return json({error:'Not found'},404,cors);
+  } catch (error) {
+   console.error('TMDB proxy request failed', error);
+   return json({error:'TMDB request failed'},502,cors);
+  }
  }
 };
 async function tmdb(path,values,env){
