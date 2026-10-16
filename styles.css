@@ -118,3 +118,27 @@ header nav button[data-tab]::after{background:var(--accent)}
 .credit-person strong{font-size:13px}
 .credit-person small{color:#9fa0a8;font-size:11px}
 @media(max-width:850px){#mainNav .mobile-menu-links button[data-tab].active,#mainNav .mobile-menu-links button[data-tab]:hover{color:var(--accent)}#mainNav .mobile-menu-links button[data-tab]::after{color:var(--accent)}.mobile-menu-intro,.mobile-menu-footer{display:none!important}header #mainNav{background:radial-gradient(ellipse at 80% 15%,color-mix(in srgb,var(--accent) 17%,transparent),transparent 48%),linear-gradient(155deg,#17191e,#0b0d10)}}
+
+/* Film cards: lift without a highlighted outline */
+.mq-entity:hover{transform:translateY(-5px);border-color:#33343a;box-shadow:0 13px 28px #0005}
+.mq-entity:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mq-tile.mq-movie{display:flex;flex-direction:column}
+.mq-tile.mq-movie .mq-meta{flex:1;gap:5px;padding:12px 13px 6px}
+.mq-tile.mq-movie .mq-meta h3{font-size:14px;line-height:1.3}
+.mq-tile.mq-movie .mq-actions{margin-top:auto;justify-content:center;align-items:center;padding:8px 8px 12px;gap:12px}
+.mq-tile.mq-movie .mq-art{aspect-ratio:3/3.8}
+.mq-table .mq-row:hover{border-color:transparent}
+.explore-tools{display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap}
+.explore-tools .mode-switch{margin:0}
+.random-film{border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:8px;padding:10px 14px;cursor:pointer;transition:transform .2s,background .2s}
+.random-film:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.suggestion-section{margin-top:30px}
+.release-filters{display:flex;gap:18px;align-items:end;justify-content:space-between;flex-wrap:wrap;margin:20px 0}
+.filter-chips{display:flex;gap:7px;flex-wrap:wrap}
+.filter-chips button{border:1px solid #414148;background:transparent;color:#ddd;border-radius:7px;padding:10px 14px;cursor:pointer}
+.filter-chips button.active,.filter-chips button:hover{border-color:var(--accent);color:var(--accent)}
+.release-person-search{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#aaa}
+.release-person-search input{background:#202127;border:1px solid #414148;border-radius:8px;padding:12px;color:#fff;min-width:min(300px,85vw)}
+.release-person-search input:focus{outline:1px solid var(--accent);border-color:var(--accent)}
+.movie-facts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0;color:var(--accent);font-size:14px}
+@media(prefers-reduced-motion:reduce){.mq-entity,.random-film{transition:none}}
