@@ -395,3 +395,18 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
  background:#1c1d22!important;border:1px solid #303034!important;
  box-shadow:none!important;
 }
+
+/* Watched items use the same consistent green card treatment as followed people. */
+.mq-grid .mq-watched.mq-tile,.mq-grid .mq-watched.mq-tile:not(:hover),
+.mq-table .mq-watched.mq-row,.mq-table .mq-watched.mq-row:not(:hover){
+ background:#193b13!important;border:1px solid var(--accent)!important;
+ border-left:1px solid var(--accent)!important;
+}
+.mq-grid .mq-watched.mq-tile:hover,.mq-table .mq-watched.mq-row:hover{background:#204a17!important}
+.mq-related::after,.mq-grid .mq-related::after,.mq-watched::after{content:none!important;display:none!important}
+.mq-grid .mq-related.mq-tile,.mq-grid .mq-related.mq-tile:not(:hover){border:1px solid var(--accent)!important}
+.mq-table .mq-related.mq-row,.mq-table .mq-related.mq-row:not(:hover){border:1px solid var(--accent)!important;border-left:1px solid var(--accent)!important}
+.credits-grid .credit-person.mq-related,.credits-grid.mq-table .credit-person.mq-related{border:1px solid var(--accent)!important;border-left:1px solid var(--accent)!important}
+.series-season-toolbar{align-items:center}
+.series-season-toolbar>.mq-actions,.series-episode>.mq-actions{display:flex;align-items:center;justify-content:center;align-self:center;padding:0!important;margin-top:0!important;margin-bottom:0!important;min-height:38px}
+.series-season-toolbar>.mq-actions .icon-only,.series-episode>.mq-actions .icon-only{display:inline-grid;place-items:center;margin:0;vertical-align:middle}
