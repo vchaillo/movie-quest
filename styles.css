@@ -376,3 +376,22 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .series-episode.is-watched .episode-number{background:color-mix(in srgb,var(--accent) 16%,#292c31);color:var(--accent)}
 .series-episode.is-watched .episode-meta strong{color:#b6b9bb}
 @media(max-width:580px){.series-season-toolbar{gap:4px}.series-season-toolbar .series-season-heading{padding:12px 9px}.series-season-toolbar>.mq-actions{margin-right:6px}.series-episode{padding:9px 10px;gap:8px}}
+
+/* Consistent followed highlights: green background and thin uniform outline, no thick left bar. */
+.mq-table .mq-related.mq-row,.mq-table .mq-related.mq-row:not(:hover),
+.credits-grid.mq-table .credit-person.mq-related,
+.credits-grid.mq-table .credit-person.mq-related:not(:hover){
+ border:1px solid var(--accent)!important;border-left:1px solid var(--accent)!important;
+ background:#193b13!important;
+}
+.mq-table .mq-related.mq-row:hover,.credits-grid.mq-table .credit-person.mq-related:hover{
+ border:1px solid var(--accent)!important;border-left:1px solid var(--accent)!important;
+ background:#204a17!important;
+}
+/* Filmographies are neutral even if the current person is followed. */
+.person-filmography .mq-related,.person-filmography .mq-related:not(:hover),
+.person-filmography .mq-grid .mq-related.mq-tile,
+.person-filmography .mq-table .mq-related.mq-row{
+ background:#1c1d22!important;border:1px solid #303034!important;
+ box-shadow:none!important;
+}
