@@ -36,6 +36,29 @@ export default {
    for(const m of movies.results||[])results.push({...m,role:'movie'});
    return json({results:results.slice(0,40)},200,cors);
   }
+  if(u.pathname==='/api/tv/search'){
+   const q=(u.searchParams.get('q')||'').trim().slice(0,100);
+   if(!q)return json({results:[]},200,cors);
+   const data=await tmdb('/search/tv',{query:q},env);
+   return json({results:(data.results||[]).slice(0,40)},200,cors);
+  }
+  if(parts.length===3&&parts[0]==='api'&&parts[1]==='tv'&&/^\\d{1,12}$/.test(parts[2])){
+   const data=await tmdb('/tv/'+parts[2],{append_to_response:'aggregate_credits,content_ratings'},env);
+   return json(data,200,cors);
+  }
+  if(parts.length===5&&parts[0]==='api'&&parts[1]==='tv'&&/^\\d{1,12}$/.test(parts[2])&&parts[3]==='season'&&/^\\d{1,3}$/.test(parts[4])){
+   const data=await tmdb('/tv/'+parts[2]+'/season/'+parts[4],{},env);
+   return json(data,200,cors);
+  }
+  if(parts.length===4&&parts[0]==='api'&&parts[1]==='person'&&/^\\d{1,12}$/.test(parts[2])&&parts[3]==='tv'){
+   const data=await tmdb('/person/'+parts[2]+'/tv_credits',{},env);
+   const byId=new Map();
+   for(const item of data.cast||[])if(item.id&&item.name)byId.set(item.id,{...item,person_roles:['actor']});
+   for(const item of data.crew||[])if(item.id&&item.name&&['Director','Creator','Executive Producer'].includes(item.job)){
+    const old=byId.get(item.id);byId.set(item.id,{...old,...item,person_roles:old?['actor','director']:['director']});
+   }
+   return json({results:[...byId.values()].sort((a,b)=>(b.first_air_date||'').localeCompare(a.first_air_date||''))},200,cors);
+  }
   if(parts.length===4&&parts[0]==='api'&&parts[1]==='person'&&parts[3]==='movies'){
    const id=parts[2];if(!/^\d{1,12}$/.test(id))return json({error:'Invalid person ID'},400,cors);
    const role=u.searchParams.get('role')==='director'?'director':'actor';
