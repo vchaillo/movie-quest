@@ -323,3 +323,19 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .confirm-actions button{padding:10px 16px;cursor:pointer}
 .confirm-actions .confirm-danger{background:#bd3030;color:white;border:1px solid #bd3030}
 @media(max-width:580px){.suggestion-heading{align-items:flex-start}.suggestion-heading .random-film{margin-left:0}.suggestion-count{margin-left:0}}
+
+/* Ignored films remain accessible but visually recede. */
+.mq-ignored,.mq-grid .mq-ignored.mq-tile,.mq-table .mq-ignored.mq-row{filter:grayscale(1);opacity:.48}
+.mq-ignored:hover,.mq-grid .mq-ignored.mq-tile:hover,.mq-table .mq-ignored.mq-row:hover{opacity:.76}
+.mq-ignored .mq-actions{filter:none}
+.suggestion-filters{display:flex;flex-direction:column;gap:14px;margin:18px 0}
+.suggestion-filter-row{display:flex;align-items:flex-start;gap:14px}
+.suggestion-filter-row>strong{font-size:13px;min-width:64px;padding-top:8px}
+.suggestion-chips{display:flex;flex-wrap:wrap;gap:7px}
+.suggestion-chips button{border:1px solid #45464b;background:#202126;color:#c7c8ce;padding:7px 11px;font-size:12px;cursor:pointer;border-radius:4px;transition:background .2s,border-color .2s,color .2s}
+.suggestion-chips button.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 17%,#202126);color:var(--accent)}
+.suggestion-chips button:hover{border-color:var(--accent)}
+.credits-grid .credit-person .mq-actions{display:flex;justify-content:flex-end;padding:8px 12px 0;margin-top:auto}
+.credits-grid .credit-person .mq-actions button{position:relative;z-index:2}
+.credits-grid.mq-table .credit-person .mq-actions{margin-left:auto;padding:0}
+@media(max-width:600px){.suggestion-filter-row{flex-direction:column;gap:6px}.suggestion-filter-row>strong{padding:0}}
