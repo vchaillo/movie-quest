@@ -339,3 +339,21 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .credits-grid .credit-person .mq-actions button{position:relative;z-index:2}
 .credits-grid.mq-table .credit-person .mq-actions{margin-left:auto;padding:0}
 @media(max-width:600px){.suggestion-filter-row{flex-direction:column;gap:6px}.suggestion-filter-row>strong{padding:0}}
+
+/* TV collections reuse the film cards and controls. */
+.series-personal,.person-series,.series-seasons{margin-top:38px}
+.series-personal>p,.person-series>p{color:#a7a8ad;margin-top:4px}
+.series-seasons{display:flex;flex-direction:column;gap:9px}
+.series-seasons>h2{margin-bottom:10px}
+.series-season{border:1px solid #34363c;background:#1b1d21}
+.series-season-heading{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;padding:15px 17px;background:transparent;border:0;color:inherit;text-align:left;cursor:pointer}
+.series-season-heading:hover{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+.series-season-heading span{font-size:12px;color:#b2b4b8}
+.series-episodes{border-top:1px solid #34363c}
+.series-episode{display:flex;align-items:center;gap:12px;min-height:48px;padding:9px 16px;border-bottom:1px solid #292b30;cursor:pointer}
+.series-episode:last-child{border-bottom:0}
+.series-episode:hover{background:#24262b}
+.series-episode input{width:17px;height:17px;accent-color:var(--accent);flex-shrink:0}
+.series-episode span{flex:1;line-height:1.4}
+.series-episode small{font-size:12px;color:#a2a4a9}
+@media(max-width:600px){.series-episode{align-items:flex-start}.series-episode small{font-size:11px}}
