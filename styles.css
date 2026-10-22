@@ -485,3 +485,26 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .mq-list-modal-foot button{padding:9px 17px;background:#30383a;border:1px solid #56615a;color:white;cursor:pointer}
 .mq-list-modal-foot button:hover{color:var(--accent)}
 @media(max-width:680px){.mq-list-browser{grid-template-columns:1fr;gap:16px}.mq-list-sidebar{position:static;display:flex;flex-direction:row;overflow-x:auto;white-space:nowrap;padding:6px}.mq-list-sidebar>button{width:auto;flex:0 0 auto;border-left:0;border-bottom:2px solid transparent}.mq-list-sidebar>button.active{border-bottom-color:var(--accent)}.mq-list-sidebar>button.mq-list-sidebar-add{margin:0;border-top:0}}
+
+/* Local, dependency-free visual placeholders */
+.mq-placeholder{display:grid;place-items:center;overflow:hidden;background:linear-gradient(155deg,#30363a,#1b2023);color:#828c91;border:1px solid #42494c;min-width:0}
+.mq-placeholder-icon{display:block;width:68%;height:68%;max-width:145px;max-height:200px}
+.mq-art>.mq-placeholder{width:100%;height:100%;border:0}
+.credit-person>.mq-placeholder{width:100%;aspect-ratio:3/4;border:0}
+.person-profile-hero>.mq-placeholder{width:160px;max-width:32%;aspect-ratio:2/3;flex-shrink:0;border-radius:12px}
+.detailtop>.mq-placeholder{width:150px;aspect-ratio:2/3;align-self:flex-start;border-radius:10px;flex-shrink:0}
+/* The fourth action retains exactly the same geometry as the other icons. */
+.mq-actions>.mq-list-add.icon-only{width:34px;height:34px;min-width:34px;align-self:center}
+.mq-actions>.mq-list-add.mq-in-list,.mq-actions>.mq-list-add.mq-in-list svg{color:var(--accent)!important;stroke:currentColor}
+/* Clickable movie poster and native full-screen preview */
+.detailtop>.mq-poster-zoom{position:relative;display:block;flex:0 0 150px;align-self:flex-start;width:150px;max-width:100%;padding:0;background:transparent;border:0;border-radius:10px;overflow:hidden;cursor:zoom-in}
+.detailtop>.mq-poster-zoom img{display:block;width:100%;height:auto;border-radius:10px}
+.mq-poster-zoom-icon{position:absolute;right:9px;bottom:9px;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#15191bdc;color:#fff;font-size:28px;line-height:1;transition:background .15s,color .15s}
+.mq-poster-zoom:hover .mq-poster-zoom-icon,.mq-poster-zoom:focus-visible .mq-poster-zoom-icon{background:var(--accent);color:#111}
+.mq-poster-lightbox{position:fixed;inset:0;margin:auto;padding:48px 20px 20px;border:1px solid #48524e;background:#151a1d;color:#fff;box-shadow:0 30px 100px #000b;max-width:min(92vw,850px);max-height:94vh;overflow:visible}
+.mq-poster-lightbox::backdrop{background:#000d;backdrop-filter:blur(5px)}
+.mq-lightbox-content{display:grid;place-items:center;max-height:calc(94vh - 72px)}
+.mq-lightbox-content img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(94vh - 72px);object-fit:contain}
+.mq-lightbox-close{position:absolute;right:10px;top:7px;display:grid;place-items:center;width:34px;height:34px;background:transparent;border:0;color:#ddd;font-size:29px;cursor:pointer}
+.mq-lightbox-close:hover{color:var(--accent)}
+@media(max-width:540px){.detailtop>.mq-poster-zoom,.detailtop>.mq-placeholder{width:120px;flex-basis:120px}.person-profile-hero>.mq-placeholder{width:120px}}
