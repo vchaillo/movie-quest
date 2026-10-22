@@ -23,10 +23,11 @@ export default {
    const q=(u.searchParams.get('q')||'').trim().slice(0,100);
    if(!q)return json({results:[]},200,cors);
    const type=u.searchParams.get('type')||'all';
-   if(!['all','actor','director','movie'].includes(type))return json({error:'Invalid type'},400,cors);
-   const [people,movies]=await Promise.all([
-    type==='movie'?Promise.resolve({results:[]}):tmdb('/search/person',{query:q},env),
-    type==='all'||type==='movie'?tmdb('/search/movie',{query:q},env):Promise.resolve({results:[]})
+   if(!['all','actor','director','movie','tv'].includes(type))return json({error:'Invalid type'},400,cors);
+   const [people,movies,tv]=await Promise.all([
+    ['movie','tv'].includes(type)?Promise.resolve({results:[]}):tmdb('/search/person',{query:q},env),
+    type==='all'||type==='movie'?tmdb('/search/movie',{query:q},env):Promise.resolve({results:[]}),
+    type==='all'||type==='tv'?tmdb('/search/tv',{query:q},env):Promise.resolve({results:[]})
    ]);
    const results=[];
    for(const p of people.results||[]){
@@ -34,6 +35,7 @@ export default {
     if((type==='all'||type==='director')&&(p.known_for_department==='Directing'||type==='director'))results.push({id:p.id,name:p.name,role:'director',profile_path:p.profile_path});
    }
    for(const m of movies.results||[])results.push({...m,role:'movie'});
+   for(const s of tv.results||[])results.push({...s,role:'tv'});
    return json({results:results.slice(0,40)},200,cors);
   }
   if(u.pathname==='/api/tv/search'){
