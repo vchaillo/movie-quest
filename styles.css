@@ -410,3 +410,5 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .series-season-toolbar{align-items:center}
 .series-season-toolbar>.mq-actions,.series-episode>.mq-actions{display:flex;align-items:center;justify-content:center;align-self:center;padding:0!important;margin-top:0!important;margin-bottom:0!important;min-height:38px}
 .series-season-toolbar>.mq-actions .icon-only,.series-episode>.mq-actions .icon-only{display:inline-grid;place-items:center;margin:0;vertical-align:middle}
+
+.bonus-toggle{display:inline-flex;align-items:center;gap:9px;margin:10px 0 16px;color:#b8bcc1;font-size:13px;cursor:pointer}.bonus-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
