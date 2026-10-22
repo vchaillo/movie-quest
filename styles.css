@@ -414,3 +414,6 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .bonus-toggle{display:inline-flex;align-items:center;gap:9px;margin:10px 0 16px;color:#b8bcc1;font-size:13px;cursor:pointer}.bonus-toggle input{accent-color:var(--accent);width:16px;height:16px;cursor:pointer}
 
 .media-tabs{display:flex;align-items:center;gap:0;border-bottom:1px solid #35393d;margin:20px 0 18px;overflow-x:auto}.media-tab{flex:0 0 auto;background:transparent;border:0;border-bottom:2px solid transparent;padding:12px 20px;color:#adb1b5;font:inherit;font-weight:600;cursor:pointer;border-radius:0}.media-tab:hover{color:#fff;background:#23272a}.media-tab.active{color:var(--accent);border-bottom-color:var(--accent)}@media(max-width:580px){.media-tab{padding:11px 13px;font-size:13px}}
+
+/* Media tabs: avoid inherited green button fill hiding green text. */
+.media-tabs .media-tab,.media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{background:transparent!important;background-color:transparent!important;box-shadow:none!important;border-radius:0!important}.media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{color:var(--accent)!important;border-bottom:2px solid var(--accent)!important}.media-tabs .media-tab:hover{background:#23272a!important}
