@@ -38,6 +38,11 @@ export default {
    for(const s of tv.results||[])results.push({...s,role:'tv'});
    return json({results:results.slice(0,40)},200,cors);
   }
+  if(u.pathname==='/api/tv/on-the-air'){
+   const pages=await Promise.all([1,2,3].map(page=>tmdb('/tv/on_the_air',{page:String(page)},env)));
+   const byId=new Map();for(const data of pages)for(const show of data.results||[])byId.set(show.id,show);
+   return json({results:[...byId.values()]},200,cors);
+  }
   if(u.pathname==='/api/tv/search'){
    const q=(u.searchParams.get('q')||'').trim().slice(0,100);
    if(!q)return json({results:[]},200,cors);
