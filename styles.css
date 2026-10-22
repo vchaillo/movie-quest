@@ -453,3 +453,35 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 /* Match the existing card/table mode buttons rather than a custom filter style. */
 .suggestion-heading-actions .suggestion-filter-trigger.icon-only{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;padding:inherit!important;border-radius:inherit!important;background:inherit!important;color:inherit!important;border:inherit!important;box-shadow:inherit!important;transform:none!important}
 .suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover{color:var(--accent)!important}
+
+/* Personal lists: browse, labels, action, modal and reorder */
+.mq-list-labels{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}
+.mq-list-label{display:inline-flex;align-items:center;max-width:100%;font-size:11px;line-height:1.4;font-weight:600;padding:3px 8px;border:1px solid #596b5a;background:#28342a;color:#c9e6cc;overflow-wrap:anywhere}
+.mq-list-add.icon-only{flex:0 0 auto;align-self:center}
+.mq-film-lists{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0}
+.mq-list-browser{display:grid;grid-template-columns:minmax(190px,245px) minmax(0,1fr);gap:25px;align-items:start}
+.mq-list-sidebar{display:flex;flex-direction:column;gap:5px;position:sticky;top:85px;padding:12px;background:#1c2022;border:1px solid #343c3e}
+.mq-list-sidebar>button{display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;width:100%;padding:12px 11px;background:transparent;border:0;border-left:2px solid transparent;color:#bec5c3;cursor:pointer;font:inherit;font-size:13px}
+.mq-list-sidebar>button.active{background:#30383a;border-left-color:var(--accent);color:white}
+.mq-list-sidebar>button:hover{color:var(--accent);background:#293032}
+.mq-list-sidebar small{color:#99a5a1}
+.mq-list-sidebar>button.mq-list-sidebar-add{justify-content:flex-start;gap:7px;border-top:1px solid #39413e;color:var(--accent);margin-top:8px}
+.mq-list-sidebar-add svg{width:16px;height:16px}
+.mq-list-browser-main{min-width:0}
+.mq-list-modal-backdrop{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.76);display:grid;place-items:center;padding:15px}
+.mq-list-modal{background:#1b2021;color:#f1f4f1;border:1px solid #4b5850;box-shadow:0 25px 90px #000a;width:min(480px,100%);max-height:min(85vh,720px);overflow-y:auto;padding:22px}
+.mq-list-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-bottom:14px;border-bottom:1px solid #38413d}
+.mq-list-modal-head h2{font-size:21px;margin:0 0 5px}.mq-list-modal-head p{font-size:12px;color:#9faea5;margin:0}
+.mq-list-modal-head .icon-only{font-size:23px}
+.mq-list-modal-rows{padding:12px 0}
+.mq-list-modal-row{display:flex;align-items:center;gap:5px;min-height:43px;border:1px solid transparent;padding:2px 4px}
+.mq-list-modal-row:hover{background:#28302c;border-color:#3b4b41}
+.mq-list-modal-row.is-dragging{opacity:.35}
+.mq-drag-handle{color:#87998b;cursor:grab;padding:6px;font-size:19px;user-select:none}
+.mq-list-choice{flex:1;display:flex;align-items:center;gap:10px;min-width:0;background:none;border:0;color:#eef1ed;text-align:left;cursor:pointer;padding:8px}
+.mq-list-choice>span:last-child{overflow-wrap:anywhere}
+.mq-list-modal-row .icon-only{flex:0 0 auto}
+.mq-list-modal-foot{display:flex;justify-content:flex-end;padding-top:15px;border-top:1px solid #38413d}
+.mq-list-modal-foot button{padding:9px 17px;background:#30383a;border:1px solid #56615a;color:white;cursor:pointer}
+.mq-list-modal-foot button:hover{color:var(--accent)}
+@media(max-width:680px){.mq-list-browser{grid-template-columns:1fr;gap:16px}.mq-list-sidebar{position:static;display:flex;flex-direction:row;overflow-x:auto;white-space:nowrap;padding:6px}.mq-list-sidebar>button{width:auto;flex:0 0 auto;border-left:0;border-bottom:2px solid transparent}.mq-list-sidebar>button.active{border-bottom-color:var(--accent)}.mq-list-sidebar>button.mq-list-sidebar-add{margin:0;border-top:0}}
