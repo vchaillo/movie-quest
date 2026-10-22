@@ -444,3 +444,12 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .mq-check-box{width:18px;height:18px;display:grid;place-items:center;border:1px solid #69736c;color:var(--accent)}
 .mq-list-new{display:flex;align-items:center;gap:6px;background:none;border:0;color:var(--accent);padding:12px 4px;cursor:pointer}.mq-list-new svg{width:16px}
 .mq-list-create{display:flex;gap:6px;flex-wrap:wrap;padding-top:9px}.mq-list-create input{min-width:120px;flex:1;background:#101616;color:#fff;border:1px solid #59625c;padding:8px}.mq-list-create button{padding:8px;background:#282f2c;color:#eee;border:1px solid #515d54;cursor:pointer}
+
+/* Final tab states: active grey/white/green underline; hover grey/green, no motion. */
+.media-tabs .media-tab{transform:none!important;translate:none!important;transition:background-color .16s ease,color .16s ease!important;border-bottom:2px solid transparent!important}
+.media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{background:#303438!important;background-color:#303438!important;color:#fff!important;border-bottom:2px solid var(--accent)!important;transform:none!important;translate:none!important}
+.media-tabs .media-tab:not(.active):hover{background:#303438!important;color:var(--accent)!important;border-bottom-color:transparent!important;transform:none!important;translate:none!important}
+.media-tabs .media-tab.active:hover{background:#303438!important;color:#fff!important;border-bottom-color:var(--accent)!important;transform:none!important;translate:none!important}
+/* Match the existing card/table mode buttons rather than a custom filter style. */
+.suggestion-heading-actions .suggestion-filter-trigger.icon-only{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;padding:inherit!important;border-radius:inherit!important;background:inherit!important;color:inherit!important;border:inherit!important;box-shadow:inherit!important;transform:none!important}
+.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover{color:var(--accent)!important}
