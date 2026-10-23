@@ -550,3 +550,26 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .queue-load-more button{background:#262d2a;border:1px solid #4a5750;border-radius:8px;padding:11px 19px;color:#e8eee9;font:inherit;cursor:pointer;transition:color .15s,border-color .15s,transform .15s}
 .queue-load-more button:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
 @media(max-width:620px){.queue-unified-toolbar .search-field{flex-basis:100%}.queue-unified-toolbar .following-controls.unified-filters{gap:8px}}
+
+/* Shared compact presentation for suggestion tabs and queue. */
+.mq-suggestion-group{margin-top:18px}
+.mq-suggestion-group>h2{margin:0 0 4px;font-size:clamp(21px,2.4vw,27px)}
+.mq-suggestion-group>.media-tabs{margin:8px 0 10px}
+.mq-suggestion-group .suggestion-section{margin-top:0}
+.mq-suggestion-group .suggestion-heading{margin:0 0 5px;justify-content:flex-end;align-items:center;gap:8px}
+.mq-suggestion-group .suggestion-heading>div:empty{display:none}
+.mq-suggestion-group .suggestion-count{margin:4px 0 12px}
+.suggestion-heading-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.suggestion-heading-actions .suggestion-filter-trigger.icon-only,
+.queue-unified-toolbar .suggestion-filter-trigger.icon-only{border:1px solid transparent!important;border-radius:8px!important;transition:background .18s,color .18s,border-color .18s,transform .18s!important;transform:none!important}
+.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover,
+.suggestion-heading-actions .suggestion-filter-trigger.icon-only:focus-visible,
+.queue-unified-toolbar .suggestion-filter-trigger.icon-only:hover,
+.queue-unified-toolbar .suggestion-filter-trigger.icon-only:focus-visible{border:1px solid var(--accent)!important;color:var(--accent)!important;background:#243128!important;transform:none!important}
+.mq-filter-dialog{border-radius:14px!important}
+.mq-filter-footer button{border-radius:9px!important}
+.mq-filter-dialog .suggestion-chips button{border-radius:8px}
+.queue-unified-toolbar .following-controls.unified-filters{flex-wrap:nowrap}
+.queue-unified-toolbar .suggestion-filter-trigger{order:1}
+.queue-unified-toolbar .random-film{order:2}
+@media(max-width:760px){.queue-unified-toolbar .following-controls.unified-filters{flex-wrap:wrap}}
