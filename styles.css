@@ -539,3 +539,14 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-filter-footer button:last-child{background:transparent!important;color:var(--accent)!important;border:1px solid var(--accent)!important}
 .mq-filter-footer button:last-child:hover{background:#2e392d!important}
 .queue-action-bar{justify-content:flex-end;margin:10px 0 14px}
+
+/* À compléter: one responsive control bar, matching Explorer. */
+.queue-unified-toolbar .following-controls.unified-filters{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0 12px}
+.queue-unified-toolbar .search-field{flex:1 1 240px;min-width:180px}
+.queue-unified-toolbar .suggestion-filter-trigger{flex:0 0 39px;order:1}
+.queue-unified-toolbar .random-film{order:2;white-space:nowrap}
+.queue-unified-toolbar .view-switch,.queue-unified-toolbar .mode-switch{order:3}
+.queue-load-more{display:flex;justify-content:center;padding:26px 0 12px}
+.queue-load-more button{background:#262d2a;border:1px solid #4a5750;border-radius:8px;padding:11px 19px;color:#e8eee9;font:inherit;cursor:pointer;transition:color .15s,border-color .15s,transform .15s}
+.queue-load-more button:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+@media(max-width:620px){.queue-unified-toolbar .search-field{flex-basis:100%}.queue-unified-toolbar .following-controls.unified-filters{gap:8px}}
