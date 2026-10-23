@@ -573,3 +573,24 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .queue-unified-toolbar .suggestion-filter-trigger{order:1}
 .queue-unified-toolbar .random-film{order:2}
 @media(max-width:760px){.queue-unified-toolbar .following-controls.unified-filters{flex-wrap:wrap}}
+
+/* Movie previews: fixed one-line director summary, consistent dates and actions. */
+.mq-movie.mq-tile .mq-meta{display:flex;flex-direction:column;gap:6px;min-width:0}
+.mq-movie.mq-tile .mq-meta h3{line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.7em}
+.mq-director-preview{display:block;min-width:0;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;line-height:1.5}
+.mq-director-preview .credit-link{font-size:inherit;max-width:calc(100% - 28px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.mq-director-more{display:inline-block;vertical-align:middle;cursor:help;font-weight:700;color:var(--accent);padding:0 3px}
+.mq-no-director{opacity:.55}
+.mq-movie.mq-tile .mq-release-date{display:block;margin-top:auto}
+.mq-movie.mq-tile .mq-actions{margin-top:auto}
+.mq-table .mq-movie .mq-meta{display:grid;grid-template-columns:minmax(130px,2fr) minmax(110px,1.4fr) minmax(92px,.75fr);align-items:center;gap:14px;width:100%;min-width:0}
+.mq-table .mq-movie .mq-meta h3{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mq-table .mq-movie .mq-release-date{white-space:nowrap;text-align:right}
+.mq-table .mq-movie .mq-actions{flex-shrink:0}
+.mq-suggestion-group .suggestion-heading{justify-content:space-between!important}
+.mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}
+.queue-unified-toolbar .suggestion-filter-trigger{order:0!important;flex:0 0 39px}
+.queue-unified-toolbar .search-field{order:1}
+.queue-unified-toolbar .random-film{order:2}
+.queue-unified-toolbar .mode-switch{order:3}
+@media(max-width:740px){.mq-table .mq-movie .mq-meta{grid-template-columns:minmax(100px,1fr) minmax(85px,1fr);gap:5px 12px}.mq-table .mq-movie .mq-release-date{grid-column:2;text-align:left}.mq-table .mq-movie .mq-actions{gap:4px}}
