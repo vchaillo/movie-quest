@@ -625,3 +625,10 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-suggestion-group .suggestion-heading{display:flex!important;justify-content:space-between!important;align-items:center!important}
 .mq-suggestion-group .suggestion-heading-actions:first-child{margin-right:auto}
 .mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}
+
+/* One consistent filter button across suggestions, queue and filmographies. */
+.suggestion-heading .suggestion-filter-trigger,.following-controls .suggestion-filter-trigger,.explore-toolbar .suggestion-filter-trigger{appearance:none!important;display:grid!important;place-items:center!important;width:40px!important;height:40px!important;border:1px solid #42474b!important;border-radius:9px!important;background:#202327!important;color:#f1f3f4!important;box-shadow:none!important;transform:none!important}
+.suggestion-heading .suggestion-filter-trigger:hover,.following-controls .suggestion-filter-trigger:hover,.explore-toolbar .suggestion-filter-trigger:hover{border-color:var(--accent)!important;color:var(--accent)!important;background:#243128!important}
+.suggestion-heading .suggestion-count{margin:0!important;white-space:nowrap;color:var(--muted,#a9b0ad)}
+.suggestion-heading .suggestion-heading-actions:last-child{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
+@media(max-width:600px){.suggestion-heading .suggestion-heading-actions:last-child{gap:7px}.suggestion-heading .suggestion-count{font-size:12px}}
