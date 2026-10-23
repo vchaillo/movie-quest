@@ -640,3 +640,35 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 /* Subtle persistent indication when any filter is active. */
 .suggestion-filter-trigger.has-active-filters,.suggestion-heading .suggestion-filter-trigger.has-active-filters,.following-controls .suggestion-filter-trigger.has-active-filters,.explore-toolbar .suggestion-filter-trigger.has-active-filters{position:relative!important;border-color:var(--accent)!important;color:var(--accent)!important;background:rgba(59,221,14,.12)!important}
 .mq-filter-indicator{position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px rgba(59,221,14,.5);pointer-events:none}
+
+/* Movie Quest — personal release calendar */
+.mq-calendar-section,.mq-cinephile-stats{margin:28px 0 34px}
+.mq-calendar-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.mq-calendar-toolbar h2,.mq-cinephile-stats h2{margin:0 0 5px}
+.mq-calendar-toolbar p,.mq-cinephile-stats>p{margin:0}
+.mq-calendar-nav{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mq-calendar-nav strong{min-width:130px;text-align:center;text-transform:capitalize}
+.mq-calendar-nav button{border:1px solid #444b4e;border-radius:8px;background:#202327;color:#f3f3f3;padding:8px 12px;cursor:pointer}
+.mq-calendar-nav button:hover{border-color:var(--accent);color:var(--accent)}
+.mq-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.mq-calendar-weekday{text-align:center;padding:9px 2px;color:#aab1af;font-size:12px;font-weight:700}
+.mq-calendar-day,.mq-calendar-empty{min-height:105px;border:1px solid #343b3a;border-radius:9px;background:#1a1e20;padding:8px;min-width:0}
+.mq-calendar-day.is-today{border-color:var(--accent)}
+.mq-calendar-day-number{display:block;margin-bottom:7px;font-size:12px;color:#c9d0ce;font-weight:700}
+.mq-calendar-day.is-today .mq-calendar-day-number{color:var(--accent)}
+.mq-calendar-event{display:block;width:100%;margin:4px 0;padding:5px 6px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:rgba(59,221,14,.10);color:#c9f5c0;border:1px solid rgba(59,221,14,.15);border-radius:5px;font-size:11px;cursor:pointer}
+.mq-calendar-event:hover{border-color:var(--accent)}
+.mq-calendar-day small{font-size:10px;color:#aab1af}
+.mq-cinephile-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}
+.mq-cinephile-kpis>div,.mq-stat-panels>section{padding:18px;border:1px solid #343b3a;border-radius:12px;background:#1a1e20}
+.mq-cinephile-kpis strong{display:block;font-size:25px;color:var(--accent)}
+.mq-cinephile-kpis span{font-size:12px;color:#aab1af}
+.mq-stat-panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mq-stat-panels h3{margin:0 0 16px;font-size:16px}
+.mq-stat-bars{display:grid;gap:12px}
+.mq-stat-bar{display:grid;grid-template-columns:minmax(90px,1fr) minmax(65px,2fr) 26px;gap:10px;align-items:center;font-size:12px}
+.mq-stat-bar>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mq-stat-bar>b{text-align:right}
+.mq-stat-track{height:7px;border-radius:6px;background:#333a37;overflow:hidden}
+.mq-stat-track>div{height:100%;border-radius:6px;background:var(--accent)}
+@media(max-width:700px){.mq-calendar-grid{gap:2px}.mq-calendar-day,.mq-calendar-empty{min-height:68px;padding:4px;border-radius:5px}.mq-calendar-day-number{font-size:11px}.mq-calendar-event{font-size:9px;padding:3px}.mq-stat-panels{grid-template-columns:1fr}.mq-cinephile-kpis{gap:6px}.mq-cinephile-kpis>div{padding:10px}.mq-cinephile-kpis strong{font-size:17px}}
