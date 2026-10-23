@@ -636,3 +636,7 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 /* Official source link on movie, documentary, TV and personality profiles. */
 .mq-tmdb-link{display:inline-flex;align-items:center;gap:6px;width:fit-content;margin:5px 0 12px;padding:7px 11px;border:1px solid rgba(59,221,14,.45);border-radius:9px;color:var(--accent);background:rgba(59,221,14,.055);font-size:13px;font-weight:650;text-decoration:none;transition:background .18s,border-color .18s}
 .mq-tmdb-link:hover,.mq-tmdb-link:focus-visible{background:rgba(59,221,14,.13);border-color:var(--accent);text-decoration:none}
+
+/* Subtle persistent indication when any filter is active. */
+.suggestion-filter-trigger.has-active-filters,.suggestion-heading .suggestion-filter-trigger.has-active-filters,.following-controls .suggestion-filter-trigger.has-active-filters,.explore-toolbar .suggestion-filter-trigger.has-active-filters{position:relative!important;border-color:var(--accent)!important;color:var(--accent)!important;background:rgba(59,221,14,.12)!important}
+.mq-filter-indicator{position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px rgba(59,221,14,.5);pointer-events:none}
