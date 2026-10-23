@@ -632,3 +632,7 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .suggestion-heading .suggestion-count{margin:0!important;white-space:nowrap;color:var(--muted,#a9b0ad)}
 .suggestion-heading .suggestion-heading-actions:last-child{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 @media(max-width:600px){.suggestion-heading .suggestion-heading-actions:last-child{gap:7px}.suggestion-heading .suggestion-count{font-size:12px}}
+
+/* Official source link on movie, documentary, TV and personality profiles. */
+.mq-tmdb-link{display:inline-flex;align-items:center;gap:6px;width:fit-content;margin:5px 0 12px;padding:7px 11px;border:1px solid rgba(59,221,14,.45);border-radius:9px;color:var(--accent);background:rgba(59,221,14,.055);font-size:13px;font-weight:650;text-decoration:none;transition:background .18s,border-color .18s}
+.mq-tmdb-link:hover,.mq-tmdb-link:focus-visible{background:rgba(59,221,14,.13);border-color:var(--accent);text-decoration:none}
