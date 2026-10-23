@@ -594,3 +594,21 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .queue-unified-toolbar .random-film{order:2}
 .queue-unified-toolbar .mode-switch{order:3}
 @media(max-width:740px){.mq-table .mq-movie .mq-meta{grid-template-columns:minmax(100px,1fr) minmax(85px,1fr);gap:5px 12px}.mq-table .mq-movie .mq-release-date{grid-column:2;text-align:left}.mq-table .mq-movie .mq-actions{gap:4px}}
+
+/* Consistent filter-first toolbars and right-aligned film metadata. */
+.explore-toolbar>.suggestion-filter-trigger{flex:0 0 39px;order:-1}
+.following-controls.unified-filters>.suggestion-filter-trigger{flex:0 0 39px;order:-1}
+.mq-suggestion-group .suggestion-heading{justify-content:space-between!important}
+.mq-table .mq-movie .mq-meta{display:flex!important;flex:1;align-items:center;flex-wrap:nowrap;gap:16px;min-width:0}
+.mq-table .mq-movie .mq-meta h3{flex:1 1 auto;min-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mq-table .mq-movie .mq-director-preview{flex:0 1 220px;max-width:220px;margin-left:auto;text-align:right;white-space:nowrap}
+.mq-table .mq-movie .mq-release-date{flex:0 0 58px;text-align:right;white-space:nowrap}
+.mq-table .mq-movie .mq-actions{flex:0 0 auto}
+.mq-table .mq-movie .mq-director-preview .credit-link{color:var(--accent)}
+.mq-table .mq-movie .mq-director-preview .credit-link:hover{text-decoration:underline}
+.mq-table .mq-movie[data-open-tv] .mq-meta{display:flex;align-items:center;gap:14px}
+.mq-table .mq-movie[data-open-tv] .mq-meta h3{flex:1}
+.mq-table .mq-movie[data-open-tv] .mq-meta small{margin-left:auto}
+.stat-person-link{appearance:none;background:transparent;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.stat-person-link:hover,.stat-person-link:focus-visible{color:var(--accent);text-decoration:underline}
+@media(max-width:660px){.mq-table .mq-movie .mq-meta{flex-wrap:wrap;gap:5px 10px}.mq-table .mq-movie .mq-meta h3{flex:1 1 100%}.mq-table .mq-movie .mq-director-preview{margin-left:0;text-align:left;flex:1 1 110px}.mq-table .mq-movie .mq-release-date{flex:0 0 auto}.mq-table .mq-movie .mq-actions{gap:3px}}
