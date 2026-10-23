@@ -522,3 +522,20 @@ transform:none!important;transition:background .16s,color .16s,transform .16s!im
 background:#ffffff14!important;color:var(--accent)!important;
 border-color:transparent!important;transform:scale(1.12)!important;outline:none!important;
 }
+
+/* Two visible, draggable range handles on the same track. */
+.mq-double-range{position:relative;height:46px;margin:8px 10px 18px;isolation:isolate}
+.mq-double-range .mq-range-track,.mq-double-range .mq-range-selected{top:21px;height:5px}
+.mq-double-range input[type="range"]{position:absolute;top:0;left:0;width:100%;height:46px;margin:0;padding:0;background:none!important;appearance:none!important;-webkit-appearance:none!important;pointer-events:none;z-index:2;cursor:ew-resize}
+.mq-double-range input[type="range"]:last-child{z-index:3}
+.mq-double-range input[type="range"]::-webkit-slider-runnable-track{height:5px;background:transparent;border:0}
+.mq-double-range input[type="range"]::-moz-range-track{height:5px;background:transparent;border:0}
+.mq-double-range input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none!important;appearance:none!important;pointer-events:auto;width:22px;height:22px;margin-top:-9px;border:3px solid var(--accent);border-radius:50%;background:#e6e9e7;box-shadow:0 0 0 4px #171c1f;cursor:ew-resize;transition:transform .18s,box-shadow .18s}
+.mq-double-range input[type="range"]::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border:3px solid var(--accent);border-radius:50%;background:#e6e9e7;box-shadow:0 0 0 4px #171c1f;cursor:ew-resize;transition:transform .18s,box-shadow .18s}
+.mq-double-range input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.16);box-shadow:0 0 0 5px #344337}
+.mq-double-range input[type="range"]::-moz-range-thumb:hover{transform:scale(1.16);box-shadow:0 0 0 5px #344337}
+.mq-double-range input[type="range"]:focus-visible::-webkit-slider-thumb{outline:2px solid white;outline-offset:3px}
+.mq-double-range input[type="range"]:focus-visible::-moz-range-thumb{outline:2px solid white;outline-offset:3px}
+.mq-filter-footer button:last-child{background:transparent!important;color:var(--accent)!important;border:1px solid var(--accent)!important}
+.mq-filter-footer button:last-child:hover{background:#2e392d!important}
+.queue-action-bar{justify-content:flex-end;margin:10px 0 14px}
