@@ -612,3 +612,16 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .stat-person-link{appearance:none;background:transparent;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:left}
 .stat-person-link:hover,.stat-person-link:focus-visible{color:var(--accent);text-decoration:underline}
 @media(max-width:660px){.mq-table .mq-movie .mq-meta{flex-wrap:wrap;gap:5px 10px}.mq-table .mq-movie .mq-meta h3{flex:1 1 100%}.mq-table .mq-movie .mq-director-preview{margin-left:0;text-align:left;flex:1 1 110px}.mq-table .mq-movie .mq-release-date{flex:0 0 auto}.mq-table .mq-movie .mq-actions{gap:3px}}
+
+/* Animated SVG cinema reel, matching the Movie Quest neon green. */
+.mq-reel{width:76px;height:76px;overflow:visible;filter:drop-shadow(0 0 12px rgba(59,221,14,.22));animation:mq-reel-spin 2.4s linear infinite}
+@keyframes mq-reel-spin{to{transform:rotate(360deg)}}
+.mq-loading-dots{font-size:15px;letter-spacing:5px;color:var(--accent);animation:mq-reel-pulse 1.2s ease-in-out infinite}
+@keyframes mq-reel-pulse{50%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.mq-reel,.mq-loading-dots{animation:none}}
+/* All filter buttons share the same hover, rounded corners and order. */
+.suggestion-filter-trigger,.suggestion-filter-trigger.icon-only,.explore-toolbar>.suggestion-filter-trigger,.following-controls>.suggestion-filter-trigger{display:grid!important;place-items:center!important;order:-2!important;flex:0 0 40px!important;width:40px!important;height:40px!important;border:1px solid #42474b!important;border-radius:9px!important;background:#202327!important;color:#f1f3f4!important;cursor:pointer!important;transition:background .18s,border-color .18s,color .18s!important}
+.suggestion-filter-trigger:hover,.suggestion-filter-trigger:focus-visible{border-color:var(--accent)!important;color:var(--accent)!important;background:#243128!important}
+.mq-suggestion-group .suggestion-heading{display:flex!important;justify-content:space-between!important;align-items:center!important}
+.mq-suggestion-group .suggestion-heading-actions:first-child{margin-right:auto}
+.mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}
