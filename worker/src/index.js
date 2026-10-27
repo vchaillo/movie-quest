@@ -19,6 +19,7 @@ export default {
   try {
   let endpoint='',params=new URLSearchParams({language:'fr-FR'});
   if(u.pathname==='/api/now-playing'){const data=await tmdb('/movie/now_playing',{region:'FR',page:'1'},env);return json({results:(data.results||[]).slice(0,40)},200,cors)}
+  if(u.pathname==='/api/upcoming'){const pages=await Promise.all([1,2,3].map(page=>tmdb('/movie/upcoming',{region:'FR',page:String(page)},env)));const byId=new Map();for(const data of pages)for(const movie of data.results||[])if(movie.id&&movie.release_date)byId.set(movie.id,movie);return json({results:[...byId.values()].sort((a,b)=>(a.release_date||'').localeCompare(b.release_date||''))},200,cors)}
   if(u.pathname==='/api/search'){
    const q=(u.searchParams.get('q')||'').trim().slice(0,100);
    if(!q)return json({results:[]},200,cors);
