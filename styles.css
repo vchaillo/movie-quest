@@ -692,3 +692,23 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-now-count{font-size:13px;line-height:1;padding:6px 9px;border-radius:20px;border:1px solid #3d4940;color:var(--accent);font-weight:600}
 .mq-calendar-event{cursor:pointer;touch-action:manipulation}
 .mq-calendar-event:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Saga collections */
+.mq-saga-section{margin:40px 0 50px;padding-top:28px;border-top:1px solid #35363b}
+.mq-saga-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.mq-saga-heading h2,.mq-saga-heading h3{margin-bottom:6px}
+.mq-saga-create{margin:22px 0;padding:20px;background:#1c1d22;border:1px solid #34343b;border-radius:14px}
+.mq-saga-create label{display:block;font-weight:600;margin-bottom:10px}
+.mq-saga-search{display:flex;gap:10px;flex-wrap:wrap}
+.mq-saga-search input{flex:1;min-width:190px;padding:12px;border-radius:8px;border:1px solid #44454c;background:#14151a;color:var(--text)}
+.mq-saga-search button,.mq-saga-heading button{padding:10px 14px;border:1px solid #45464b;border-radius:8px;background:#27282e;color:var(--text);cursor:pointer}
+.mq-saga-search button:hover,.mq-saga-heading button:hover{border-color:var(--accent)}
+.mq-saga-matches{display:grid;gap:6px;margin-top:12px;max-height:280px;overflow:auto}
+.mq-saga-matches button{display:flex;align-items:center;gap:12px;text-align:left;padding:8px;background:#27282e;border:1px solid #3a3b42;border-radius:8px;color:var(--text);cursor:pointer}
+.mq-saga-matches button span:last-child{margin-left:auto;color:var(--accent)}
+.mq-saga-matches img{width:30px;height:44px;object-fit:cover;border-radius:4px}
+.mq-saga-pills{display:flex;gap:9px;overflow-x:auto;padding:4px 0 14px}
+.mq-saga-pills button{flex-shrink:0;border:1px solid #414249;border-radius:20px;background:#222329;color:var(--text);padding:9px 15px;cursor:pointer}
+.mq-saga-pills button.active{border-color:var(--accent);color:var(--accent)}
+.mq-saga-detail{margin-top:14px}
+@media(max-width:650px){.mq-saga-search{flex-direction:column}.mq-saga-search input{width:100%}}
