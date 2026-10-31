@@ -746,3 +746,13 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-saga-editor>input:focus{outline:2px solid var(--accent);outline-offset:1px}
 .mq-saga-create-form input[type=file]{width:100%;max-width:100%;box-sizing:border-box;font-size:.85rem}
 @media(max-width:650px){.mq-saga-top-actions{width:100%}.mq-saga-upload{flex:1;justify-content:center}}
+
+/* Collection iconography and search reset */
+.mq-saga-reel{width:88px;height:88px;max-width:65%;color:#8c939e}
+.mq-saga-image-icon{width:18px;height:18px;flex-shrink:0}
+.mq-saga-search-field{position:relative}
+.mq-saga-editor .mq-saga-search-field input{display:block;box-sizing:border-box;width:100%;padding:13px 46px 13px 15px;background:#14161b;color:var(--text);border:1px solid #4a4c54;border-radius:9px;font-size:1rem}
+.mq-saga-search-field button{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:32px;height:32px;border:0;border-radius:7px;background:transparent;color:var(--text);font-size:23px;cursor:pointer}
+.mq-saga-search-field button:hover{background:#35383e}
+.mq-saga-search-field button[hidden]{display:none}
+.mq-saga-top-actions button:disabled{opacity:.35;cursor:not-allowed}
