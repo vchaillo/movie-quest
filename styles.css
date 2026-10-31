@@ -712,3 +712,25 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-saga-pills button.active{border-color:var(--accent);color:var(--accent)}
 .mq-saga-detail{margin-top:14px}
 @media(max-width:650px){.mq-saga-search{flex-direction:column}.mq-saga-search input{width:100%}}
+
+/* Collection gallery */
+.mq-personal-lists{margin-top:56px;padding-top:28px;border-top:1px solid #36373e}
+.mq-saga-section{border:0;margin-top:12px;padding-top:0}
+.mq-saga-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px;margin:24px 0}
+.mq-saga-card{padding:0;display:flex;flex-direction:column;text-align:left;border:1px solid #373840;border-radius:14px;overflow:hidden;background:#1e2025;color:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.mq-saga-card:hover{transform:translateY(-4px);border-color:var(--accent)}
+.mq-saga-cover{aspect-ratio:2/3;display:block;background:#292c32;overflow:hidden}
+.mq-saga-cover img{width:100%;height:100%;object-fit:cover}
+.mq-saga-placeholder{height:100%;display:grid;place-items:center;font-size:58px}
+.mq-saga-card-info{display:flex;flex-direction:column;gap:8px;padding:14px;min-height:95px}
+.mq-saga-card-info strong{line-height:1.3}
+.mq-saga-card-info small{opacity:.75}
+.mq-saga-progress{display:block;height:5px;border-radius:10px;background:#44474b;overflow:hidden;margin-top:auto}
+.mq-saga-progress span{display:block;height:100%;background:var(--accent)}
+.mq-saga-back{margin-bottom:18px}
+.mq-saga-create-modal{max-width:440px;width:calc(100% - 32px)}
+.mq-saga-create-form{display:grid;gap:14px;padding:14px 0}
+.mq-saga-create-form input{padding:13px;border-radius:9px;border:1px solid #484950;background:#16171c;color:inherit}
+.mq-saga-modal-actions{display:flex;justify-content:flex-end;gap:10px}
+.mq-saga-modal-actions button{padding:10px 15px;border-radius:8px;cursor:pointer}
+@media(max-width:600px){.mq-saga-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
