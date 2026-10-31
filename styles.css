@@ -734,3 +734,15 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-saga-modal-actions{display:flex;justify-content:flex-end;gap:10px}
 .mq-saga-modal-actions button{padding:10px 15px;border-radius:8px;cursor:pointer}
 @media(max-width:600px){.mq-saga-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+
+/* Compact collection editor */
+.mq-saga-top-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.mq-saga-upload{position:relative;display:inline-flex;align-items:center;gap:7px;padding:10px 14px;border:1px solid #45464b;border-radius:8px;background:#27282e;color:var(--text);cursor:pointer;font-size:.9rem}
+.mq-saga-upload:hover{border-color:var(--accent)}
+.mq-saga-upload input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;pointer-events:none}
+.mq-saga-editor{margin:20px 0 26px;padding:18px;border:1px solid #383a40;background:#1d1f24;border-radius:13px}
+.mq-saga-editor label{display:block;font-weight:600;margin-bottom:10px}
+.mq-saga-editor>input{display:block;width:100%;box-sizing:border-box;padding:13px 15px;background:#14161b;color:var(--text);border:1px solid #4a4c54;border-radius:9px;font-size:1rem}
+.mq-saga-editor>input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.mq-saga-create-form input[type=file]{width:100%;max-width:100%;box-sizing:border-box;font-size:.85rem}
+@media(max-width:650px){.mq-saga-top-actions{width:100%}.mq-saga-upload{flex:1;justify-content:center}}
