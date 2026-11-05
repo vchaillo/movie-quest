@@ -757,3 +757,49 @@ input[type="search"]::-webkit-search-cancel-button{appearance:none;-webkit-appea
 .mq-lightbox-status{flex-basis:100%;text-align:center;color:#d0d4d2;font-size:12px;min-height:16px}
 @media(max-width:540px){.mq-poster-lightbox .mq-lightbox-content{padding:60px 48px 125px}.mq-poster-lightbox button.mq-lightbox-previous,.mq-poster-lightbox button.mq-lightbox-next{top:calc(50% - 18px)!important}}
 .following-controls.unified-filters:has(>.suggestion-filter-trigger)>.search-field{flex:1 1 170px;min-width:0}
+
+/* List membership dialog: shared SVG geometry and a scrollable content area. */
+.mq-list-modal{border-radius:20px}
+.mq-list-picker-dialog{display:flex;flex-direction:column;width:min(560px,100%);max-height:min(88dvh,780px);padding:0;overflow:hidden;border-color:#3e4843;background:#1b2021;box-shadow:0 28px 100px #0009}
+.mq-list-picker-dialog .mq-list-modal-head{flex:none;align-items:center;padding:22px 24px 20px;border-bottom:1px solid #ffffff0e;background:#202627}
+.mq-list-picker-dialog .mq-list-modal-head h2{font-size:23px;letter-spacing:-.5px;margin-bottom:8px}
+.mq-list-picker-dialog .mq-list-modal-head p{max-width:360px;line-height:1.55;color:#aab5af;font-size:13px}
+.mq-list-modal-body{padding:22px 24px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#536159 transparent}
+.mq-list-section-heading{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.mq-list-section-heading h3{font-size:14px;letter-spacing:.02em;margin:0;color:#e8eeea}
+.mq-list-section-heading>span{display:grid;place-items:center;min-width:24px;height:24px;padding:0 7px;border:1px solid #ffffff12;border-radius:8px;background:#ffffff06;font-size:11px;color:#aebbb3}
+.mq-list-section-hint{margin:0 0 12px;color:#8f9e95;font-size:12px;line-height:1.5}
+.mq-list-picker-dialog .mq-list-modal-rows{display:grid;gap:7px;padding:0}
+.mq-list-picker-dialog .mq-list-modal-row{min-height:68px;gap:6px;padding:5px 8px;border:1px solid #ffffff0b;border-radius:12px;background:#ffffff03;transition:background .16s,border-color .16s}
+.mq-list-picker-dialog .mq-list-modal-row:hover{background:#ffffff07;border-color:#526158}
+.mq-list-picker-dialog .mq-list-modal-row:has([aria-checked="true"]){background:color-mix(in srgb,var(--accent) 7%,#1b2021);border-color:color-mix(in srgb,var(--accent) 32%,#36423b)}
+.mq-list-picker-dialog .mq-list-choice{padding:8px 4px;gap:12px;align-self:stretch;border-radius:8px;transform:none!important}
+.mq-list-picker-dialog .mq-list-choice:hover{background:transparent;color:#fff}
+.mq-list-picker-dialog .mq-check-box{display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:6px;border:1px solid #637369;color:var(--accent);line-height:0;background:#141a17}
+.mq-list-picker-dialog [aria-checked="true"] .mq-check-box{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,#141a17)}
+.mq-list-picker-dialog .mq-check-box svg{display:block;width:16px;height:16px;flex:none}
+.mq-list-label-text{display:flex;flex-direction:column;gap:4px;min-width:0;overflow-wrap:anywhere}
+.mq-list-label-text strong{font-size:14px;line-height:1.4;font-weight:600}
+.mq-list-label-text small{font-size:11px;line-height:1.4;color:#99a89e}
+.mq-list-picker-dialog .mq-drag-handle{display:grid;place-items:center;flex:0 0 20px;padding:0;color:#74877a}
+.mq-list-picker-dialog .mq-drag-handle svg{width:16px;height:20px}
+.mq-list-row-actions{display:flex;gap:4px;align-items:center;flex:none}
+.mq-list-picker-dialog .icon-only{display:grid!important;place-items:center!important;flex:0 0 34px;width:34px;height:34px;min-width:34px;padding:0!important;border-radius:50%;border:1px solid #ffffff14;background:#ffffff04;color:#b4c0b8;line-height:0!important;transform:none!important;transition:color .15s,border-color .15s,background .15s}
+.mq-list-picker-dialog .icon-only svg{display:block;width:17px;height:17px;flex:none}
+.mq-list-picker-dialog .icon-only:hover,.mq-list-picker-dialog .icon-only:focus-visible{color:var(--accent);border-color:var(--accent);background:#ffffff09;transform:none!important}
+.mq-list-picker-dialog .mq-list-delete:hover{color:#ff9696;border-color:#cc6e6e;background:#ff666611}
+.mq-list-picker-dialog button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mq-list-picker-dialog .mq-list-new{width:100%;justify-content:center;gap:8px;margin-top:12px;padding:11px 14px;border:1px dashed #526359;border-radius:10px;background:transparent;font-size:13px;transform:none!important}
+.mq-list-picker-dialog .mq-list-new:hover{border-color:var(--accent);background:#ffffff04}
+.mq-collection-section-heading{margin-top:28px}
+.mq-list-modal-empty{margin:12px 0 0;padding:16px;border:1px dashed #ffffff1c;border-radius:12px;line-height:1.6;font-size:13px;color:#a2b0a7}
+.mq-list-picker-dialog .mq-list-create{display:flex;flex-direction:column;gap:10px;margin-top:14px;padding:16px;border:1px solid #4a5c50;border-radius:12px;background:#141a17}
+.mq-list-picker-dialog .mq-list-create label{font-size:12px;color:#b9c7be}
+.mq-list-picker-dialog .mq-list-create input{width:100%;min-width:0;min-height:42px;border-radius:8px;padding:10px 12px}
+.mq-list-form-actions{display:flex;justify-content:flex-end;gap:8px}
+.mq-list-picker-dialog .mq-list-create button{padding:9px 13px;border-radius:8px;font-size:12px}
+.mq-list-picker-dialog .mq-list-create button[type="submit"]{background:var(--accent);border-color:var(--accent);color:#121a14}
+.mq-list-picker-dialog .mq-list-modal-foot{flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;border-top:1px solid #ffffff0e;background:#202627}
+.mq-list-modal-foot>span{max-width:230px;font-size:11px;line-height:1.5;color:#96a69b}
+.mq-list-picker-dialog .mq-list-modal-foot button{padding:11px 19px;border-radius:10px;border-color:var(--accent);background:var(--accent);color:#121a14;font-weight:650;font-size:13px;transform:none!important}
+@media(max-width:540px){.mq-list-picker-dialog{max-height:90dvh;border-radius:17px}.mq-list-picker-dialog .mq-list-modal-head{padding:18px}.mq-list-modal-body{padding:18px}.mq-list-picker-dialog .mq-list-modal-foot{padding:14px 18px;gap:12px}.mq-list-picker-dialog .mq-list-modal-head h2{font-size:21px}.mq-list-picker-dialog .mq-list-modal-row{padding:5px;gap:3px}.mq-list-choice{gap:8px}.mq-list-row-actions{gap:3px}.mq-list-picker-dialog .mq-drag-handle{flex-basis:15px}.mq-list-picker-dialog .mq-check-box{width:20px;height:20px;flex-basis:20px}}
