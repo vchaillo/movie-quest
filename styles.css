@@ -418,14 +418,12 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 /* Media tabs: avoid inherited green button fill hiding green text. */
 .media-tabs .media-tab,.media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{background:transparent!important;background-color:transparent!important;box-shadow:none!important;border-radius:0!important}.media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{color:var(--accent)!important;border-bottom:2px solid var(--accent)!important}.media-tabs .media-tab:hover{background:#23272a!important}
 
-.suggestion-heading-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.suggestion-filter-trigger{display:grid;place-items:center;width:40px;height:40px;border:1px solid #42474b;border-radius:0;background:#202327;color:#f1f3f4;cursor:pointer}.suggestion-filter-trigger:hover{border-color:var(--accent);color:var(--accent)}.mq-filter-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:16px}.mq-filter-dialog{width:min(540px,100%);max-height:min(82vh,800px);overflow-y:auto;background:#191d20;color:#f5f5f5;border:1px solid #444b4e;padding:24px;box-shadow:0 18px 70px #0008;border-radius:0}.mq-filter-header{display:flex;align-items:center;justify-content:space-between}.mq-filter-header h2{margin:0}.mq-filter-header button{font-size:24px;background:transparent;border:0;color:inherit;cursor:pointer}.mq-filter-dialog h3{font-size:14px;margin:22px 0 12px}.mq-filter-dialog .suggestion-chips{display:flex;flex-wrap:wrap;gap:7px}.mq-filter-years{display:grid;gap:16px}.mq-filter-years label{display:grid;gap:10px;font-size:13px}.mq-filter-years input{width:100%;accent-color:var(--accent)}.mq-filter-footer{display:flex;justify-content:space-between;gap:12px;margin-top:26px}.mq-filter-footer button{border-radius:0;padding:10px 16px;cursor:pointer}.mq-filter-footer button:last-child{background:var(--accent);color:#101610;border-color:var(--accent)}
+.suggestion-heading-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.mq-filter-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:16px}.mq-filter-dialog{width:min(540px,100%);max-height:min(82vh,800px);overflow-y:auto;background:#191d20;color:#f5f5f5;border:1px solid #444b4e;padding:24px;box-shadow:0 18px 70px #0008;border-radius:0}.mq-filter-header{display:flex;align-items:center;justify-content:space-between}.mq-filter-header h2{margin:0}.mq-filter-header button{font-size:24px;background:transparent;border:0;color:inherit;cursor:pointer}.mq-filter-dialog h3{font-size:14px;margin:22px 0 12px}.mq-filter-dialog .suggestion-chips{display:flex;flex-wrap:wrap;gap:7px}.mq-filter-years{display:grid;gap:16px}.mq-filter-years label{display:grid;gap:10px;font-size:13px}.mq-filter-years input{width:100%;accent-color:var(--accent)}.mq-filter-footer{display:flex;justify-content:space-between;gap:12px;margin-top:26px}.mq-filter-footer button{border-radius:0;padding:10px 16px;cursor:pointer}.mq-filter-footer button:last-child{background:var(--accent);color:#101610;border-color:var(--accent)}
 
 /* Tabs: selected grey surface, hover text green. */
 .media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{background:#303438!important;background-color:#303438!important;color:#e4e6e7!important;border-bottom-color:transparent!important}
 .media-tabs .media-tab:hover,.media-tabs .media-tab.active:hover{background:#303438!important;color:var(--accent)!important}
 .suggestion-heading-actions{display:flex;flex-direction:row-reverse;gap:8px;align-items:center}
-.suggestion-filter-trigger{border:1px solid #40464a!important;background:#202428!important;color:#d9dedf!important;width:40px;height:40px;padding:9px;display:inline-grid;place-items:center}
-.suggestion-filter-trigger svg{display:block;width:19px;height:19px}
 .mq-filter-footer button:last-child{background:transparent!important;color:#e8e9eb!important;border:1px solid #4a5155!important}
 .mq-filter-footer button:last-child:hover{border-color:var(--accent)!important;color:var(--accent)!important}
 .mq-double-range{height:40px;position:relative;display:flex;align-items:center;margin:6px 9px 12px}
@@ -449,10 +447,7 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .media-tabs .media-tab{transform:none!important;translate:none!important;transition:background-color .16s ease,color .16s ease!important;border-bottom:2px solid transparent!important}
 .media-tabs .media-tab.active,.media-tabs .media-tab[aria-selected="true"]{background:#303438!important;background-color:#303438!important;color:#fff!important;border-bottom:2px solid var(--accent)!important;transform:none!important;translate:none!important}
 .media-tabs .media-tab:not(.active):hover{background:#303438!important;color:var(--accent)!important;border-bottom-color:transparent!important;transform:none!important;translate:none!important}
-.media-tabs .media-tab.active:hover{background:#303438!important;color:#fff!important;border-bottom-color:var(--accent)!important;transform:none!important;translate:none!important}
-/* Match the existing card/table mode buttons rather than a custom filter style. */
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;padding:inherit!important;border-radius:inherit!important;background:inherit!important;color:inherit!important;border:inherit!important;box-shadow:inherit!important;transform:none!important}
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover{color:var(--accent)!important}
+.media-tabs .media-tab.active:hover{background:#303438!important;color:#fff!important;border-bottom-color:var(--accent)!important;transform:none!important;translate:none!important}/* Match the existing card/table mode buttons rather than a custom filter style. */
 
 /* Personal lists: browse, labels, action, modal and reorder */
 .mq-list-labels{display:flex;flex-wrap:wrap;gap:5px;margin:7px 0}
@@ -507,21 +502,7 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .mq-lightbox-content img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(94vh - 72px);object-fit:contain}
 .mq-lightbox-close{position:absolute;right:10px;top:7px;display:grid;place-items:center;width:34px;height:34px;background:transparent;border:0;color:#ddd;font-size:29px;cursor:pointer}
 .mq-lightbox-close:hover{color:var(--accent)}
-@media(max-width:540px){.detailtop>.mq-poster-zoom,.detailtop>.mq-placeholder{width:120px;flex-basis:120px}.person-profile-hero>.mq-placeholder{width:120px}}
-
-/* Match filter icon to the card/table view buttons, including hover motion. */
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only{
-display:inline-flex!important;align-items:center!important;justify-content:center!important;
-width:39px!important;height:39px!important;min-width:39px!important;min-height:39px!important;
-padding:8px!important;border-radius:7px!important;border:1px solid transparent!important;
-background:transparent!important;color:inherit!important;box-shadow:none!important;
-transform:none!important;transition:background .16s,color .16s,transform .16s!important;
-}
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover,
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:focus-visible{
-background:#ffffff14!important;color:var(--accent)!important;
-border-color:transparent!important;transform:scale(1.12)!important;outline:none!important;
-}
+@media(max-width:540px){.detailtop>.mq-poster-zoom,.detailtop>.mq-placeholder{width:120px;flex-basis:120px}.person-profile-hero>.mq-placeholder{width:120px}}/* Match filter icon to the card/table view buttons, including hover motion. */
 
 /* Two visible, draggable range handles on the same track. */
 .mq-double-range{position:relative;height:46px;margin:8px 10px 18px;isolation:isolate}
@@ -543,7 +524,6 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 /* À compléter: one responsive control bar, matching Explorer. */
 .queue-unified-toolbar .following-controls.unified-filters{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0 12px}
 .queue-unified-toolbar .search-field{flex:1 1 240px;min-width:180px}
-.queue-unified-toolbar .suggestion-filter-trigger{flex:0 0 39px;order:1}
 .queue-unified-toolbar .random-film{order:2;white-space:nowrap}
 .queue-unified-toolbar .view-switch,.queue-unified-toolbar .mode-switch{order:3}
 .queue-load-more{display:flex;justify-content:center;padding:26px 0 12px}
@@ -560,17 +540,10 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-suggestion-group .suggestion-heading>div:empty{display:none}
 .mq-suggestion-group .suggestion-count{margin:4px 0 12px}
 .suggestion-heading-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only,
-.queue-unified-toolbar .suggestion-filter-trigger.icon-only{border:1px solid transparent!important;border-radius:8px!important;transition:background .18s,color .18s,border-color .18s,transform .18s!important;transform:none!important}
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover,
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:focus-visible,
-.queue-unified-toolbar .suggestion-filter-trigger.icon-only:hover,
-.queue-unified-toolbar .suggestion-filter-trigger.icon-only:focus-visible{border:1px solid var(--accent)!important;color:var(--accent)!important;background:#243128!important;transform:none!important}
 .mq-filter-dialog{border-radius:14px!important}
 .mq-filter-footer button{border-radius:9px!important}
 .mq-filter-dialog .suggestion-chips button{border-radius:8px}
 .queue-unified-toolbar .following-controls.unified-filters{flex-wrap:nowrap}
-.queue-unified-toolbar .suggestion-filter-trigger{order:1}
 .queue-unified-toolbar .random-film{order:2}
 @media(max-width:760px){.queue-unified-toolbar .following-controls.unified-filters{flex-wrap:wrap}}
 
@@ -589,15 +562,10 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 .mq-table .mq-movie .mq-actions{flex-shrink:0}
 .mq-suggestion-group .suggestion-heading{justify-content:space-between!important}
 .mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}
-.queue-unified-toolbar .suggestion-filter-trigger{order:0!important;flex:0 0 39px}
 .queue-unified-toolbar .search-field{order:1}
 .queue-unified-toolbar .random-film{order:2}
 .queue-unified-toolbar .mode-switch{order:3}
-@media(max-width:740px){.mq-table .mq-movie .mq-meta{grid-template-columns:minmax(100px,1fr) minmax(85px,1fr);gap:5px 12px}.mq-table .mq-movie .mq-release-date{grid-column:2;text-align:left}.mq-table .mq-movie .mq-actions{gap:4px}}
-
-/* Consistent filter-first toolbars and right-aligned film metadata. */
-.explore-toolbar>.suggestion-filter-trigger{flex:0 0 39px;order:-1}
-.following-controls.unified-filters>.suggestion-filter-trigger{flex:0 0 39px;order:-1}
+@media(max-width:740px){.mq-table .mq-movie .mq-meta{grid-template-columns:minmax(100px,1fr) minmax(85px,1fr);gap:5px 12px}.mq-table .mq-movie .mq-release-date{grid-column:2;text-align:left}.mq-table .mq-movie .mq-actions{gap:4px}}/* Consistent filter-first toolbars and right-aligned film metadata. */
 .mq-suggestion-group .suggestion-heading{justify-content:space-between!important}
 .mq-table .mq-movie .mq-meta{display:flex!important;flex:1;align-items:center;flex-wrap:nowrap;gap:16px;min-width:0}
 .mq-table .mq-movie .mq-meta h3{flex:1 1 auto;min-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -618,27 +586,17 @@ border-color:transparent!important;transform:scale(1.12)!important;outline:none!
 @keyframes mq-reel-spin{to{transform:rotate(360deg)}}
 .mq-loading-dots{font-size:15px;letter-spacing:5px;color:var(--accent);animation:mq-reel-pulse 1.2s ease-in-out infinite}
 @keyframes mq-reel-pulse{50%{opacity:.25}}
-@media(prefers-reduced-motion:reduce){.mq-reel,.mq-loading-dots{animation:none}}
-/* All filter buttons share the same hover, rounded corners and order. */
-.suggestion-filter-trigger,.suggestion-filter-trigger.icon-only,.explore-toolbar>.suggestion-filter-trigger,.following-controls>.suggestion-filter-trigger{display:grid!important;place-items:center!important;order:-2!important;flex:0 0 40px!important;width:40px!important;height:40px!important;border:1px solid #42474b!important;border-radius:9px!important;background:#202327!important;color:#f1f3f4!important;cursor:pointer!important;transition:background .18s,border-color .18s,color .18s!important}
-.suggestion-filter-trigger:hover,.suggestion-filter-trigger:focus-visible{border-color:var(--accent)!important;color:var(--accent)!important;background:#243128!important}
+@media(prefers-reduced-motion:reduce){.mq-reel,.mq-loading-dots{animation:none}}/* All filter buttons share the same hover, rounded corners and order. */
 .mq-suggestion-group .suggestion-heading{display:flex!important;justify-content:space-between!important;align-items:center!important}
 .mq-suggestion-group .suggestion-heading-actions:first-child{margin-right:auto}
-.mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}
-
-/* One consistent filter button across suggestions, queue and filmographies. */
-.suggestion-heading .suggestion-filter-trigger,.following-controls .suggestion-filter-trigger,.explore-toolbar .suggestion-filter-trigger{appearance:none!important;display:grid!important;place-items:center!important;width:40px!important;height:40px!important;border:1px solid #42474b!important;border-radius:9px!important;background:#202327!important;color:#f1f3f4!important;box-shadow:none!important;transform:none!important}
-.suggestion-heading .suggestion-filter-trigger:hover,.following-controls .suggestion-filter-trigger:hover,.explore-toolbar .suggestion-filter-trigger:hover{border-color:var(--accent)!important;color:var(--accent)!important;background:#243128!important}
+.mq-suggestion-group .suggestion-heading-actions:last-child{margin-left:auto}/* One consistent filter button across suggestions, queue and filmographies. */
 .suggestion-heading .suggestion-count{margin:0!important;white-space:nowrap;color:var(--muted,#a9b0ad)}
 .suggestion-heading .suggestion-heading-actions:last-child{display:flex;align-items:center;justify-content:flex-end;gap:14px;flex-wrap:wrap}
 @media(max-width:600px){.suggestion-heading .suggestion-heading-actions:last-child{gap:7px}.suggestion-heading .suggestion-count{font-size:12px}}
 
 /* Official source link on movie, documentary, TV and personality profiles. */
 .mq-tmdb-link{display:inline-flex;align-items:center;gap:6px;width:fit-content;margin:5px 0 12px;padding:7px 11px;border:1px solid rgba(59,221,14,.45);border-radius:9px;color:var(--accent);background:rgba(59,221,14,.055);font-size:13px;font-weight:650;text-decoration:none;transition:background .18s,border-color .18s}
-.mq-tmdb-link:hover,.mq-tmdb-link:focus-visible{background:rgba(59,221,14,.13);border-color:var(--accent);text-decoration:none}
-
-/* Subtle persistent indication when any filter is active. */
-.suggestion-filter-trigger.has-active-filters,.suggestion-heading .suggestion-filter-trigger.has-active-filters,.following-controls .suggestion-filter-trigger.has-active-filters,.explore-toolbar .suggestion-filter-trigger.has-active-filters{position:relative!important;border-color:var(--accent)!important;color:var(--accent)!important;background:rgba(59,221,14,.12)!important}
+.mq-tmdb-link:hover,.mq-tmdb-link:focus-visible{background:rgba(59,221,14,.13);border-color:var(--accent);text-decoration:none}/* Subtle persistent indication when any filter is active. */
 .mq-filter-indicator{position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px rgba(59,221,14,.5);pointer-events:none}
 
 /* Movie Quest — personal release calendar */
@@ -767,9 +725,6 @@ button:hover,.random-film:hover,.suggestion-pagination button:hover,.filter-chip
 .mq-lightbox-close:hover,.mq-lightbox-previous:hover,.mq-lightbox-next:hover{color:var(--accent)!important;border-color:var(--accent)!important;transform:none!important;background:#171a1e!important}
 .mq-lightbox-close{top:8px!important;right:8px!important;font-size:27px!important}
 .mq-lightbox-previous,.mq-lightbox-next{font-size:33px!important}
-.suggestion-heading-actions .suggestion-filter-trigger.icon-only:hover,.suggestion-heading-actions .suggestion-filter-trigger.icon-only:focus-visible{transform:none!important}
-.suggestion-filter-trigger.icon-only{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 39px!important;width:39px!important;height:39px!important;min-width:39px!important;min-height:39px!important;padding:8px!important;border-radius:7px!important;transform:none!important}
-.suggestion-filter-trigger.icon-only:hover{transform:none!important;color:var(--accent)!important}
 .mq-placeholder-preview{margin-top:36px}
 .mq-preview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .mq-preview-card{display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -778,3 +733,27 @@ button:hover,.random-film:hover,.suggestion-pagination button:hover,.filter-chip
 .mq-preview-art>.mq-placeholder,.mq-preview-art>.mq-saga-placeholder{display:grid;place-items:center;width:100%;height:100%;min-height:0}
 .mq-preview-art .mq-placeholder-icon{max-width:75%;max-height:75%}
 @media(max-width:540px){.mq-preview-grid{gap:9px}.mq-preview-card strong{font-size:11px}.mq-lightbox-previous,.mq-lightbox-next{width:36px!important;height:36px!important;min-width:36px!important}}
+
+/* One filter component for suggestions, releases, queue and cinema searches. */
+.suggestion-filter-trigger.icon-only{position:relative;appearance:none;display:inline-flex!important;align-items:center!important;justify-content:center!important;order:-2!important;flex:0 0 39px!important;width:39px!important;height:39px!important;min-width:39px!important;min-height:39px!important;padding:8px!important;border:1px solid #42474b!important;border-radius:7px!important;background:#202327!important;color:#f1f3f4!important;box-shadow:none!important;transform:none!important;translate:none!important;transition:background .18s,border-color .18s,color .18s!important}
+.suggestion-filter-trigger.icon-only:hover,.suggestion-filter-trigger.icon-only:focus-visible,.suggestion-filter-trigger.icon-only.has-active-filters{border-color:var(--accent)!important;color:var(--accent)!important;background:#243128!important;transform:none!important}
+.suggestion-filter-trigger svg{display:block;width:19px;height:19px;flex:none}
+/* Preserve the vertical centering transform even under the global hover reset. */
+.search-field .search-clear,.search-field .search-clear:hover,.search-field .search-clear:focus-visible,.mq-saga-search-field button,.mq-saga-search-field button:hover,.mq-saga-search-field button:focus-visible{display:grid;place-items:center;padding:0;line-height:1;transform:translateY(-50%)!important;translate:none!important;transition:color .15s,background-color .15s!important}
+.search-field .search-clear:hover,.mq-saga-search-field button:hover{color:var(--accent)!important}
+input[type="search"]::-webkit-search-cancel-button{appearance:none;-webkit-appearance:none}
+.mq-poster-lightbox .mq-lightbox-content{padding:64px 64px 110px}
+.mq-lightbox-stage{position:relative;display:grid;place-items:center;width:100%;height:100%;overflow:hidden;touch-action:pan-y}
+.mq-lightbox-stage img{position:absolute;max-height:100%!important;max-width:100%;object-fit:contain}
+.mq-poster-lightbox button.mq-lightbox-close,.mq-poster-lightbox button.mq-lightbox-previous,.mq-poster-lightbox button.mq-lightbox-next{display:grid!important;place-items:center!important;padding:0!important;line-height:0!important;translate:none!important;transform:none!important}
+.mq-poster-lightbox button.mq-lightbox-previous,.mq-poster-lightbox button.mq-lightbox-next{top:calc(50% - 21px)!important}
+.mq-poster-lightbox button svg{display:block;flex:none;width:22px;height:22px}
+.mq-poster-lightbox button[hidden]{display:none!important}
+.mq-lightbox-toolbar{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;width:max-content;max-width:calc(100% - 24px)}
+.mq-lightbox-toolbar .mq-lightbox-counter{position:static;transform:none;white-space:nowrap}
+.mq-lightbox-cover{padding:9px 14px;border:1px solid #4a5056;border-radius:9px;background:#171a1e;color:#fff;font-size:13px;transform:none!important;transition:color .15s,border-color .15s}
+.mq-lightbox-cover:hover{color:var(--accent);border-color:var(--accent)}
+.mq-lightbox-cover:disabled{opacity:.65;cursor:default}
+.mq-lightbox-status{flex-basis:100%;text-align:center;color:#d0d4d2;font-size:12px;min-height:16px}
+@media(max-width:540px){.mq-poster-lightbox .mq-lightbox-content{padding:60px 48px 125px}.mq-poster-lightbox button.mq-lightbox-previous,.mq-poster-lightbox button.mq-lightbox-next{top:calc(50% - 18px)!important}}
+.following-controls.unified-filters:has(>.suggestion-filter-trigger)>.search-field{flex:1 1 170px;min-width:0}

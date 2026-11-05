@@ -86,6 +86,9 @@ export default {
    const movies=[...byId.values()].sort((a,b)=>b.release_date.localeCompare(a.release_date));
    return json({profile,movies},200,cors);
   }
+  if(parts.length===4&&parts[0]==='api'&&parts[1]==='movie'&&/^\d{1,12}$/.test(parts[2])&&parts[3]==='images'){
+   try{return json(await tmdb('/movie/'+parts[2]+'/images',{language:''},env),200,cors)}catch(e){return json({error:'TMDB images unavailable'},502,cors)}
+  }
   if(parts.length===3&&parts[0]==='api'&&parts[1]==='movie'&&/^\d{1,12}$/.test(parts[2])){
    try{return json(await tmdb('/movie/'+parts[2],{append_to_response:'credits'},env),200,cors)}catch(e){return json({error:'TMDB unavailable'},502,cors)}
   }
