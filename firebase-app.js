@@ -77,16 +77,23 @@ function refreshLoadingSection(key){
   (key==='following'&&['now-playing','stats'].includes(current)))render();
 }
 
-function loadSection(key,work){
- if(sectionLoads.has(key))return sectionLoads.get(key);
- const job=Promise.resolve().then(work).finally(()=>{
-  if(sectionLoads.get(key)!==job)return;
+function loadSection(key,work,resources=[]){
+ const current=sectionLoads.get(key);
+ const owner=user;
+ if(current){
+  if(resources.every(id=>current.resources.has(id)))return current.job;
+  // A library edit can add resources while the current batch is in flight.
+  return current.job.then(()=>user===owner?loadSection(key,work,resources):undefined);
+ }
+ const entry={resources:new Set(resources)};
+ entry.job=Promise.resolve().then(()=>user===owner?work():undefined).finally(()=>{
+  if(sectionLoads.get(key)!==entry)return;
   sectionLoads.delete(key);
   refreshLoadingSection(key);
  });
- sectionLoads.set(key,job);
+ sectionLoads.set(key,entry);
  refreshLoadingSection(key);
- return job;
+ return entry.job;
 }
 
 function loadingDots(){
@@ -180,7 +187,7 @@ function hydrateSavedMovies(status,section){
     if(!filmCache.has(id))filmCache.set(id,await request('/api/movie/'+id));
    }));
   }
- });
+ },ids);
 }
 async function request(path){if(!user)throw Error('Connexion requise');const token=await user.getIdToken();const r=await fetch(API+path,{headers:{Authorization:'Bearer '+token}});if(!r.ok)throw Error('API cinéma indisponible ('+r.status+'). Vérifie la configuration du Worker ou ta session Firebase.');return r.json()}
 let sagaQuery='',sagaMatches=[],sagaSearching=false,sagaSelected='all',sagaMode='tmdb',sagaCreateOpen=false,sagaSearchTimer=null,sagaSearchSeq=0,sagaMovieQuery='',sagaMovieMatches=[],sagaMovieSeq=0,sagaMovieTimer=null;const sagaCache=new Map();let listPickerOpen=false,listEditId=null,listTabMedia='films',listSelected='all',listQuery='',listView='cards',listModalSource=null;
@@ -195,6 +202,7 @@ function hydrateSagas(){
  if(!missingCollections.length&&!missingMovies.length)return;
  return loadSection('collections',async()=>{
   await Promise.allSettled(missingCollections.map(async id=>{
+   if(sagaCache.has(id))return;
    const data=await request('/api/collections/'+id);
    sagaCache.set(id,data);
    for(const movie of data.parts||[])if(!filmCache.has(movie.id))filmCache.set(movie.id,movie);
@@ -204,7 +212,7 @@ function hydrateSagas(){
     if(!filmCache.has(id))filmCache.set(id,await request('/api/movie/'+id));
    }));
   }
- });
+ },[...missingCollections.map(id=>'collection:'+id),...missingMovies]);
 }
 async function readSagaCover(file){
  if(!file)return '';
@@ -351,7 +359,7 @@ function loadFollowing(){
  return loadSection('following',async()=>{
   await Promise.allSettled(items.map(loadPerson));
   await Promise.allSettled(items.map(p=>loadPersonSeries(p.id)));
- });
+ },items.map(p=>p.id));
 }
 let timer;
 async function search(){
@@ -631,7 +639,7 @@ function hydrateListContent(){
     if(!cache.has(id))cache.set(id,await request('/api/'+type+'/'+id));
    }));
   }
- });
+ },[...movies,...series.map(id=>'tv:'+id)]);
 }
 function setLayout(mode){if(mode!=='cards'&&mode!=='list')return;view=mode;exploreView=mode;followingView=mode;releaseView=mode;nowView=mode;castView=mode;seriesView=mode;listView=mode;try{localStorage.setItem('moviequest-layout',JSON.stringify({mode}))}catch(e){/* Private browsing may disable storage. */}render()}
 
