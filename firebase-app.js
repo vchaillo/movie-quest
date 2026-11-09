@@ -2,7 +2,7 @@ import {openMovieGallery} from './movie-gallery.js';
 import {completion,recentSeen,byMonth} from './stats.js';
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
 import {getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
-import {getFirestore,doc,getDoc,setDoc,onSnapshot} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
+import {getFirestore,doc,getDoc,setDoc,onSnapshot,updateDoc,arrayUnion,FieldPath} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js';
 const firebaseConfig={apiKey:"AIzaSyDU-l_qBPCzZwwNaYK5khBeoVYjG_e670k",authDomain:"movie-quest-cde3a.firebaseapp.com",projectId:"movie-quest-cde3a",storageBucket:"movie-quest-cde3a.firebasestorage.app",messagingSenderId:"632772720590",appId:"1:632772720590:web:1b94784b74e3b59b0a5d9f"};
 const auth=getAuth(initializeApp(firebaseConfig)),db=getFirestore(auth.app),provider=new GoogleAuthProvider();
 const API=localStorage.getItem('moviequest-api-origin')||'https://movie-quest.valentinchaillou89.workers.dev';
@@ -254,7 +254,12 @@ function request(path){
  return job;
 }
 let sagaQuery='',sagaMatches=[],sagaSearching=false,sagaSelected='all',sagaMode='tmdb',sagaCreateOpen=false,sagaSearchTimer=null,sagaSearchSeq=0,sagaMovieQuery='',sagaMovieMatches=[],sagaMovieSeq=0,sagaMovieTimer=null;const sagaCache=new Map();let listPickerOpen=false,listEditId=null,listTabMedia='films',listSelected='all',listQuery='',listView='cards',listModalSource=null;
-const sagaMovieIds=s=>[...new Set([...(s.tmdbId?(sagaCache.get(s.tmdbId)?.parts||[]).map(m=>m.id):[]),...(s.movieIds||[])].map(Number))];
+const pendingSagaMovies=new Map();
+const sagaMovieIds=(s,key=s.id)=>[...new Set([
+ ...(sagaCache.get(s.tmdbId)?.parts||[]).map(movie=>movie.id),
+ ...(s.movieIds||[]),
+ ...(pendingSagaMovies.get(key)||[]),
+].map(Number))];
 const sagaContains=(s,id)=>sagaMovieIds(s).includes(Number(id));
 const savedSagas=()=>Object.entries(state.sagas||{}).map(([id,saga])=>({id,...saga})).sort((a,b)=>a.name.localeCompare(b.name,'fr'));
 function hydrateSagas(){
@@ -301,23 +306,76 @@ document.addEventListener('change',async e=>{
  try{saga.coverUrl=await readSagaCover(e.target.files[0]);await persist();render()}
  catch(err){error=err.message;render()}
 });
+function sagaProgressMarkup(seen,total){
+ const percent=total?Math.round(seen/total*100):0;
+ return '<span class="mq-saga-progress" role="progressbar" aria-label="Films vus dans la collection" aria-valuenow="'+percent+'" aria-valuetext="'+seen+' sur '+total+' films vus"><span style="width:'+percent+'%"></span></span>';
+}
+function sagaMovieResultsMarkup(ids){
+ const included=new Set(ids);
+ return sagaMovieMatches.map(movie=>{
+  const present=included.has(Number(movie.id));
+  return '<button type="button" data-saga-movie-pick="'+movie.id+'" aria-label="'+
+   esc((present?'Déjà dans la collection : ':'Ajouter à la collection : ')+movie.title)+'"'+(present?' aria-disabled="true"':'')+'>'+
+   (movie.poster_path?'<img src="'+poster(movie.poster_path,'w92')+'" loading="lazy" alt="">':'')+
+   '<span>'+esc(movie.title)+' ('+esc(movie.release_date?.slice(0,4)||'—')+')</span>'+
+   '<span class="mq-saga-movie-action">'+(present?ico('check')+' Déjà ajouté':'Ajouter +')+'</span></button>';
+ }).join('');
+}
+async function addSagaMovie(movie){
+ const owner=user,key=sagaSelected,saga=state.sagas?.[key],id=Number(movie.id);
+ if(!owner||!saga||!Number.isSafeInteger(id)||id<=0||sagaMovieIds(saga,key).includes(id))return;
+ const pending=pendingSagaMovies.get(key)||new Set();
+ pending.add(id);
+ pendingSagaMovies.set(key,pending);
+ if(!filmCache.has(id))filmCache.set(id,movie);
+ error='';
+ render();
+ try{
+  await updateDoc(doc(db,'users',owner.uid,'data','movieQuest'),new FieldPath('sagas',key,'movieIds'),arrayUnion(id));
+  const current=state.sagas?.[key];
+  if(user===owner&&current&&!current.movieIds?.some(value=>Number(value)===id)){
+   current.movieIds=[...(current.movieIds||[]),id];
+  }
+ }catch(e){if(user===owner)error='Impossible d’ajouter le film à la collection. '+e.message}
+ finally{
+  pending.delete(id);
+  if(!pending.size&&pendingSagaMovies.get(key)===pending)pendingSagaMovies.delete(key);
+  if(user===owner&&tab==='collections'&&sagaSelected===key)render();
+ }
+}
+async function searchSagaMovies(query,seq){
+ try{
+  const data=await request('/api/search?q='+encodeURIComponent(query)+'&type=movie');
+  if(seq!==sagaMovieSeq)return;
+  sagaMovieMatches=(data.results||[]).filter(movie=>movie.role==='movie');
+  const collection=state.sagas?.[sagaSelected];
+  const box=document.getElementById('sagaMovieMatches');
+  if(box&&collection)box.innerHTML=sagaMovieResultsMarkup(sagaMovieIds(collection,sagaSelected));
+ }catch(e){
+  if(seq!==sagaMovieSeq)return;
+  const box=document.getElementById('sagaMovieMatches');
+  if(box)box.textContent=e.message;
+ }
+}
 function sagaMarkup(){
  const sagas=savedSagas(),chosen=sagas.find(s=>s.id===sagaSelected),data=chosen?.tmdbId?sagaCache.get(chosen.tmdbId):null;
  const ids=chosen?sagaMovieIds(chosen):[];
- const movies=ids.map(id=>filmCache.get(Number(id))||data?.parts?.find(m=>m.id===Number(id))).filter(Boolean).sort((a,b)=>(a.release_date||'').localeCompare(b.release_date||''));
- const seen=movies.filter(m=>status(m.id)==='seen').length;
+ const movies=ids.map(id=>filmCache.get(id)||data?.parts?.find(movie=>movie.id===id)).filter(Boolean)
+  .sort((a,b)=>(b.release_date||'').localeCompare(a.release_date||''));
+ const seen=ids.filter(id=>state.statuses[id]==='seen').length;
  const loadingCollections=sectionLoads.has('collections');
  const coverCandidates=chosen?[...new Set([chosen.poster_path,data?.poster_path,...movies.map(m=>m.poster_path)].filter(Boolean))].slice(0,16):[];
  const activeCover=chosen?.coverUrl||chosen?.poster_path||data?.poster_path||movies.find(m=>m.poster_path)?.poster_path;
  const cards=sagas.map(s=>{
   const details=s.tmdbId?sagaCache.get(s.tmdbId):null;
-  const films=sagaMovieIds(s).map(id=>filmCache.get(Number(id))||details?.parts?.find(m=>m.id===Number(id))).filter(Boolean);
-  const watched=films.filter(m=>status(m.id)==='seen').length;
+  const ids=sagaMovieIds(s);
+  const films=ids.map(id=>filmCache.get(id)||details?.parts?.find(movie=>movie.id===id)).filter(Boolean);
+  const watched=ids.filter(id=>state.statuses[id]==='seen').length;
   const cover=s.coverUrl||s.poster_path||details?.poster_path||films.find(m=>m.poster_path)?.poster_path;
-  return '<button type="button" class="mq-saga-card" data-saga-select="'+esc(s.id)+'"><span class="mq-saga-cover">'+(cover?mediaImage(s.coverUrl?cover:poster(cover),'collection',{lazy:true}):''+placeholder('collection')+'')+'</span><span class="mq-saga-card-info"><strong>'+esc(s.name)+'</strong><small>'+(loadingCollections&&!films.length?'Chargement…':watched+' / '+films.length+' films vus')+'</small><span class="mq-saga-progress"><span style="width:'+(films.length?Math.round(watched/films.length*100):0)+'%"></span></span></span></button>';
+  return '<button type="button" class="mq-saga-card" data-saga-select="'+esc(s.id)+'"><span class="mq-saga-cover">'+(cover?mediaImage(s.coverUrl?cover:poster(cover),'collection',{lazy:true}):''+placeholder('collection')+'')+'</span><span class="mq-saga-card-info"><strong>'+esc(s.name)+'</strong><small>'+(loadingCollections&&!ids.length?'Chargement…':watched+' / '+ids.length+' films vus')+'</small>'+sagaProgressMarkup(watched,ids.length)+'</span></button>';
  }).join('');
  return '<section class="mq-saga-section"><div class="mq-library-section-heading"><h2>Collections</h2><p>Explore tes franchises et suis ta progression film par film.</p></div>'+
- (chosen?'<div class="mq-saga-detail"><div class="mq-saga-hero"><div class="mq-saga-hero-art">'+(activeCover?mediaImage(chosen.coverUrl?activeCover:poster(activeCover,'w500'),'collection',{alt:'Couverture de '+chosen.name}):placeholder('collection'))+'</div><div class="mq-saga-heading"><div><button type="button" class="mq-saga-back" data-saga-select="all">← Toutes les collections</button><h3>'+esc(chosen.name)+'</h3><p class="muted">'+seen+' / '+movies.length+' films vus'+(chosen.tmdbId?' · Collection TMDB personnalisable':' · Collection personnalisée')+'</p></div><div class="mq-saga-top-actions"><label class="mq-saga-upload" for="sagaCoverFile"><svg class="mq-saga-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m4 18 5-5 3.5 3.5 3-3L21 19"/></svg> Importer une couverture<input id="sagaCoverFile" type="file" accept="image/*"></label><button type="button" data-saga-rename="'+esc(chosen.id)+'">Renommer</button><button type="button" data-saga-delete="'+esc(chosen.id)+'">Supprimer</button></div></div></div><div class="mq-saga-cover-gallery"><h4>Choisir une couverture</h4><div class="mq-saga-cover-options">'+coverCandidates.map(path=>'<button type="button" data-saga-cover-pick="'+esc(path)+'" aria-label="Utiliser cette affiche comme couverture"><img src="'+poster(path,'w185')+'" alt=""></button>').join('')+'</div></div><div class="mq-saga-editor"><label for="sagaMovieSearch">Ajouter un film à la collection</label><div class="mq-saga-search-field"><input id="sagaMovieSearch" autocomplete="off" placeholder="Rechercher un film par son titre…" value="'+esc(sagaMovieQuery)+'"><button type="button" data-saga-search-clear aria-label="Effacer la recherche" '+(sagaMovieQuery?'':'hidden')+'>×</button></div><div id="sagaMovieMatches" class="mq-saga-matches">'+sagaMovieMatches.map(m=>'<button type="button" data-saga-movie-pick="'+m.id+'">'+(m.poster_path?'<img src="'+poster(m.poster_path,'w92')+'" alt="">':'')+'<span>'+esc(m.title)+' ('+esc(m.release_date?.slice(0,4)||'—')+')</span><span>Ajouter +</span></button>').join('')+'</div></div>'+loadingContent(loadingCollections,'Chargement des films de la collection…',filmList(movies,listView),movies.length,listView)+'</div>':
+ (chosen?'<div class="mq-saga-detail"><div class="mq-saga-hero"><div class="mq-saga-hero-art">'+(activeCover?mediaImage(chosen.coverUrl?activeCover:poster(activeCover,'w500'),'collection',{alt:'Couverture de '+chosen.name}):placeholder('collection'))+'</div><div class="mq-saga-heading"><div class="mq-saga-summary"><button type="button" class="mq-saga-back" data-saga-select="all">← Toutes les collections</button><h3>'+esc(chosen.name)+'</h3><p class="muted">'+seen+' / '+ids.length+' films vus'+(chosen.tmdbId?' · Collection TMDB personnalisable':' · Collection personnalisée')+'</p>'+sagaProgressMarkup(seen,ids.length)+'</div><div class="mq-saga-top-actions"><label class="mq-saga-upload" for="sagaCoverFile"><svg class="mq-saga-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m4 18 5-5 3.5 3.5 3-3L21 19"/></svg> Importer une couverture<input id="sagaCoverFile" type="file" accept="image/*"></label><button type="button" data-saga-rename="'+esc(chosen.id)+'">Renommer</button><button type="button" data-saga-delete="'+esc(chosen.id)+'">Supprimer</button></div></div></div><div class="mq-saga-cover-gallery"><h4>Choisir une couverture</h4><div class="mq-saga-cover-options">'+coverCandidates.map(path=>'<button type="button" data-saga-cover-pick="'+esc(path)+'" aria-label="Utiliser cette affiche comme couverture"><img src="'+poster(path,'w185')+'" alt=""></button>').join('')+'</div></div><div class="mq-saga-editor"><label for="sagaMovieSearch">Ajouter un film à la collection</label><div class="mq-saga-search-field"><input id="sagaMovieSearch" autocomplete="off" placeholder="Rechercher un film par son titre…" value="'+esc(sagaMovieQuery)+'"><button type="button" data-saga-search-clear aria-label="Effacer la recherche" '+(sagaMovieQuery?'':'hidden')+'>×</button></div><div id="sagaMovieMatches" class="mq-saga-matches">'+sagaMovieResultsMarkup(ids)+'</div></div>'+loadingContent(loadingCollections,'Chargement des films de la collection…',filmList(movies,listView),movies.length,listView)+'</div>':
  '<div class="mq-saga-create"><label for="sagaSearch">Rechercher une collection TMDB</label><div class="mq-saga-search"><input id="sagaSearch" autocomplete="off" placeholder="Star Wars, Retour vers le futur, Batman…" value="'+esc(sagaQuery)+'"><button type="button" data-saga-create>+ Collection personnalisée</button></div>'+
  '<div id="sagaSearchFeedback">'+loadingContent(sagaSearching,'Recherche de collections…','',true)+
  (sagaMatches.length?'<div class="mq-saga-matches">'+sagaMatches.map(s=>'<button type="button" data-saga-add="'+s.id+'">'+(s.poster_path?'<img src="'+poster(s.poster_path,'w92')+'" alt="">':'')+'<span>'+esc(s.name)+'</span><span>Ajouter +</span></button>').join('')+'</div>':'')+'</div></div>'+
@@ -852,7 +910,9 @@ function libraryNavigation(){
  return '<div class="mq-library-heading"><h1>Bibliothèque</h1><p>Tes sélections et ton historique de visionnage.</p></div>'+
   '<nav class="mq-library-nav" aria-label="Sections de la bibliothèque">'+links+'</nav>';
 }
-function render(){if(!authReady)return;if(user){sessionStorage.setItem('moviequest-view',JSON.stringify({tab,selected,film,tv:seriesId}));syncRoute()}const focusedLibraryTab=document.activeElement?.dataset.libraryTab;const focusedSearch=document.activeElement?.matches?.('input[type=search], #sagaSearch, #sagaMovieSearch')?document.activeElement:null;const searchCaret=focusedSearch?[focusedSearch.selectionStart,focusedSearch.selectionEnd]:null;document.body.classList.remove('app-booting');const mobileToggle=document.getElementById('mobileNavToggle'),mainNav=document.getElementById('mainNav');mobileToggle.hidden=!user;mobileToggle.setAttribute('aria-expanded',String(mobileNavOpen));mobileToggle.setAttribute('aria-label',mobileNavOpen?'Fermer le menu':'Ouvrir le menu');mobileToggle.classList.toggle('is-open',mobileNavOpen);mainNav.classList.toggle('mobile-open',mobileNavOpen);document.body.classList.toggle('mobile-menu-active',mobileNavOpen&&!!user);document.querySelector('nav').hidden=!user;document.querySelector('footer').hidden=!user;if(!authReady){document.getElementById('account').innerHTML='';el.innerHTML='<div class="auth-screen"><div class="auth-panel"><div class="eyebrow">Movie Quest</div><h1>Chargement de la session…</h1></div></div>';return}if(!user){document.getElementById('account').innerHTML='';el.innerHTML='<div class="auth-screen"><div class="auth-panel"><div class="eyebrow">Bienvenue dans Movie Quest</div><h1>Le cinéma est une quête.</h1><p>Connecte-toi avec Google pour explorer les filmographies et retrouver ta progression personnelle.</p>'+btn('Continuer avec Google','id="login"','gold')+'</div></div>';return}mainNav.querySelectorAll('button[data-tab]').forEach(b=>{
+function render(){if(!authReady)return;if(user){sessionStorage.setItem('moviequest-view',JSON.stringify({tab,selected,film,tv:seriesId}));syncRoute()}const focusedSagaMovie=document.activeElement?.dataset.sagaMoviePick;
+const sagaMatchesScroll=document.getElementById('sagaMovieMatches')?.scrollTop;
+const focusedLibraryTab=document.activeElement?.dataset.libraryTab;const focusedSearch=document.activeElement?.matches?.('input[type=search], #sagaSearch, #sagaMovieSearch')?document.activeElement:null;const searchCaret=focusedSearch?[focusedSearch.selectionStart,focusedSearch.selectionEnd]:null;document.body.classList.remove('app-booting');const mobileToggle=document.getElementById('mobileNavToggle'),mainNav=document.getElementById('mainNav');mobileToggle.hidden=!user;mobileToggle.setAttribute('aria-expanded',String(mobileNavOpen));mobileToggle.setAttribute('aria-label',mobileNavOpen?'Fermer le menu':'Ouvrir le menu');mobileToggle.classList.toggle('is-open',mobileNavOpen);mainNav.classList.toggle('mobile-open',mobileNavOpen);document.body.classList.toggle('mobile-menu-active',mobileNavOpen&&!!user);document.querySelector('nav').hidden=!user;document.querySelector('footer').hidden=!user;if(!authReady){document.getElementById('account').innerHTML='';el.innerHTML='<div class="auth-screen"><div class="auth-panel"><div class="eyebrow">Movie Quest</div><h1>Chargement de la session…</h1></div></div>';return}if(!user){document.getElementById('account').innerHTML='';el.innerHTML='<div class="auth-screen"><div class="auth-panel"><div class="eyebrow">Bienvenue dans Movie Quest</div><h1>Le cinéma est une quête.</h1><p>Connecte-toi avec Google pour explorer les filmographies et retrouver ta progression personnelle.</p>'+btn('Continuer avec Google','id="login"','gold')+'</div></div>';return}mainNav.querySelectorAll('button[data-tab]').forEach(b=>{
  const active=isLibraryEntry(b.dataset.tab)?isLibraryTab(tab):b.dataset.tab===tab;
  b.classList.toggle('active',active);
  if(active)b.setAttribute('aria-current','page');
@@ -889,7 +949,11 @@ if(tab==='stats'){const all=films(),summary=completion(all,state.statuses),month
 if(tab==='watched'){h+='<div class="mq-library-section-heading"><h2>Vus</h2><p>Retrouve les films, séries, documentaires et spectacles que tu as vus.</p></div>'+mediaTabs('watched-media',watchedMediaTab,[['films','Films'],['series','Séries'],['documentaries','Documentaires'],['spectacles','Spectacles']])+watchedToolbar()+'<div id="watchedSearchResults" tabindex="-1">'+watchedResultsMarkup()+'</div>'+suggestionFilterDialog({periodOnly:watchedMediaTab==='series'})}
 if(tab==='queue'){h+='<div class="mq-library-section-heading"><h2>À compléter</h2><p>Retrouve ta sélection et les contenus qu’il te reste à découvrir.</p></div>'+mediaTabs('queue-media',queueMediaTab,[['films','Films'],['series','Séries'],['documentaries','Documentaires'],['spectacles','Spectacles']])+'<div class="queue-unified-toolbar">'+filterBar({id:'queueSearch',queryValue:queueQuery,placeholder:'Rechercher dans les contenus à compléter…',field:'view',mode:view,extra:filterTrigger()+randomTrigger(queueMediaTab)})+'</div>'+'<div id="queueSearchResults" tabindex="-1">'+queueResultsMarkup(queueQuery)+'</div>'+suggestionFilterDialog()}
 
-el.innerHTML=h+listModalMarkup();if(focusedLibraryTab)el.querySelector('[data-library-tab="'+CSS.escape(focusedLibraryTab)+'"]')?.focus({preventScroll:true});if(focusedSearch){const input=document.getElementById(focusedSearch.id);if(input){input.focus({preventScroll:true});input.setSelectionRange(...searchCaret)}}}
+el.innerHTML=h+listModalMarkup();
+const matches=document.getElementById('sagaMovieMatches');
+if(matches&&sagaMatchesScroll!==undefined)matches.scrollTop=sagaMatchesScroll;
+if(focusedSagaMovie)matches?.querySelector('[data-saga-movie-pick="'+CSS.escape(focusedSagaMovie)+'"]')?.focus({preventScroll:true});
+if(focusedLibraryTab)el.querySelector('[data-library-tab="'+CSS.escape(focusedLibraryTab)+'"]')?.focus({preventScroll:true});if(focusedSearch){const input=document.getElementById(focusedSearch.id);if(input){input.focus({preventScroll:true});input.setSelectionRange(...searchCaret)}}}
 document.addEventListener('click',async e=>{
  if(e.target.hasAttribute('data-saga-modal-backdrop')){sagaCreateOpen=false;render();return}
  const b=e.target.closest('[data-saga-cover-pick],[data-saga-cover-remove],[data-saga-search-clear],[data-saga-cover-save],[data-saga-movie-pick],[data-saga-search],[data-saga-create],[data-saga-add],[data-saga-select],[data-saga-delete],[data-saga-rename],[data-saga-movie-add],[data-saga-modal-close]');if(!b||!user)return;
@@ -898,7 +962,11 @@ document.addEventListener('click',async e=>{
  else if(b.hasAttribute('data-saga-cover-remove')){const saga=state.sagas?.[sagaSelected];if(!saga)return;delete saga.coverUrl;await persist();render()}
  else if(b.hasAttribute('data-saga-search-clear')){clearTimeout(sagaMovieTimer);sagaMovieSeq++;sagaMovieQuery='';sagaMovieMatches=[];const input=document.getElementById('sagaMovieSearch');if(input){input.value='';input.focus()}document.getElementById('sagaMovieMatches')?.replaceChildren();b.hidden=true}
  else if(b.hasAttribute('data-saga-cover-save')){const saga=state.sagas?.[sagaSelected];if(!saga)return;saga.coverUrl=document.getElementById('sagaCoverUrl')?.value.trim()||'';await persist();render()}
- else if(b.hasAttribute('data-saga-movie-pick')){const saga=state.sagas?.[sagaSelected],movie=sagaMovieMatches.find(m=>m.id===Number(b.dataset.sagaMoviePick));if(!saga||!movie)return;saga.movieIds=[...new Set([...(saga.movieIds||[]),movie.id])];filmCache.set(movie.id,movie);sagaMovieQuery='';sagaMovieMatches=[];await persist();render()}
+ else if(b.hasAttribute('data-saga-movie-pick')){
+  if(b.getAttribute('aria-disabled')==='true')return;
+  const movie=sagaMovieMatches.find(movie=>Number(movie.id)===Number(b.dataset.sagaMoviePick));
+  if(movie)await addSagaMovie(movie);
+ }
  else if(b.hasAttribute('data-saga-search')){sagaQuery=document.getElementById('sagaSearch')?.value.trim()||'';sagaSearching=true;render();sagaMatches=sagaQuery?(await request('/api/collections/search?q='+encodeURIComponent(sagaQuery))).results||[]:[];sagaSearching=false;render()}
  else if(b.hasAttribute('data-saga-create')){sagaCreateOpen=true;render();document.getElementById('sagaNameInput')?.focus()}
  else if(b.hasAttribute('data-saga-modal-close')){sagaCreateOpen=false;render()}else if(b.hasAttribute('data-saga-add')){const id=Number(b.dataset.sagaAdd),item=sagaMatches.find(s=>s.id===id);if(!item)return;const key='tmdb_'+id;state.sagas={...(state.sagas||{}),[key]:{name:item.name,tmdbId:id}};sagaSelected=key;sagaMatches=[];sagaQuery='';await persist();await hydrateSagas();render()}
@@ -969,7 +1037,17 @@ document.addEventListener('change',async e=>{if(e.target.id==='releaseRole'){rel
 document.addEventListener('change',async e=>{if(e.target.matches('[data-tv-episode]')){await toggleEpisode(seriesId,Number(e.target.dataset.tvSeason),Number(e.target.dataset.tvEpisode))}});
 document.addEventListener('change',e=>{if(e.target.id==='suggestionMinYear'||e.target.id==='suggestionMaxYear'){mediaPages.queue=mediaPages.watched=0;suggestionPage=0;documentaryPage=0;render()}});
 document.addEventListener('change',e=>{if(e.target.id==='watchedSort'){if(watchedMediaTab==='series')watchedSeriesSort=e.target.value;else watchedSort=e.target.value;mediaPages.watched=0;updateFilterResults('watchedSearch')}});
-document.addEventListener('input',e=>{const clear=e.target.closest('.search-field')?.querySelector('.search-clear');if(clear)clear.hidden=!e.target.value;if(e.target.id==='sagaMovieSearch'){sagaMovieQuery=e.target.value;const clearButton=document.querySelector('[data-saga-search-clear]');if(clearButton)clearButton.hidden=!sagaMovieQuery;clearTimeout(sagaMovieTimer);const seq=++sagaMovieSeq;if(!sagaMovieQuery.trim()){sagaMovieMatches=[];document.getElementById('sagaMovieMatches')?.replaceChildren();return}sagaMovieTimer=setTimeout(async()=>{try{const data=await request('/api/search?q='+encodeURIComponent(sagaMovieQuery)+'&type=movie');if(seq!==sagaMovieSeq)return;sagaMovieMatches=(data.results||[]).filter(m=>m.role==='movie');const box=document.getElementById('sagaMovieMatches');if(box)box.innerHTML=sagaMovieMatches.map(m=>'<button type="button" data-saga-movie-pick="'+m.id+'">'+(m.poster_path?'<img src="'+poster(m.poster_path,'w92')+'" alt="">':'')+'<span>'+esc(m.title)+' ('+esc(m.release_date?.slice(0,4)||'—')+')</span><span>Ajouter +</span></button>').join('')}catch(err){const box=document.getElementById('sagaMovieMatches');if(box)box.textContent=err.message}},300);return}if(e.target.id==='sagaSearch'){sagaQuery=e.target.value;clearTimeout(sagaSearchTimer);sagaSearchSeq++;sagaMatches=[];if(!sagaQuery.trim()){document.getElementById('sagaSearchFeedback')?.replaceChildren();return}sagaSearchTimer=setTimeout(searchSagaCollections,300);return}if(e.target.id==='suggestionMinYear'||e.target.id==='suggestionMaxYear'){if(e.target.id==='suggestionMinYear')suggestionMinYear=Math.min(Number(e.target.value),suggestionMaxYear);else suggestionMaxYear=Math.max(Number(e.target.value),suggestionMinYear);suggestionPage=0;document.getElementById(e.target.id==='suggestionMinYear'?'minYearOutput':'maxYearOutput').textContent=e.target.id==='suggestionMinYear'?suggestionMinYear:suggestionMaxYear;const bar=document.querySelector('.mq-range-selected');if(bar){bar.style.left=((suggestionMinYear-1900)/130*100)+'%';bar.style.right=(100-(suggestionMaxYear-1900)/130*100)+'%'}const counter=document.getElementById('mqFilterResultCount');if(counter)counter.textContent='les '+filteredResultCount()+' résultats';return}if(e.target.id==='listSearch'){listQuery=e.target.value;const target=document.getElementById('listResults');if(target){const all=sortedLists(),chosen=all.find(l=>l.id===listSelected),ids=chosen?(chosen.movieIds||[]):[...new Set(all.flatMap(l=>l.movieIds||[]))],tvIds=chosen?(chosen.tvIds||[]):[...new Set(all.flatMap(l=>l.tvIds||[]))];target.innerHTML=listTabMedia==='series'?seriesList(tvIds.map(id=>seriesCache.get(Number(id))||followedSeries().find(m=>m.id===Number(id))).filter(Boolean).filter(m=>matchesText(m.name,listQuery)),listView):filmList(ids.map(id=>filmCache.get(Number(id))).filter(Boolean).filter(m=>matchesMovieTab(m,listTabMedia)&&matchesText(m.title,listQuery)),listView)}return}if(e.target.id==='seriesSearch'){seriesQuery=e.target.value;clearTimeout(seriesSearchTimer);seriesSearchTimer=setTimeout(searchSeries,350);const clear=e.target.parentElement.querySelector('.search-clear');if(clear)clear.hidden=!seriesQuery;return}if(['personFilmSearch','castSearch','nowSearch','releaseSearch','queueSearch'].includes(e.target.id)){const id=e.target.id;if(id==='personFilmSearch')personFilmQuery=e.target.value;else if(id==='castSearch')castQuery=e.target.value;else if(id==='nowSearch')nowQuery=e.target.value;else if(id==='releaseSearch')releaseQuery=e.target.value;else{queueQuery=e.target.value;mediaPages.queue=0}const clear=e.target.parentElement.querySelector('.search-clear');if(clear)clear.hidden=!e.target.value;updateFilterResults(id);return}if(e.target.id==='personSeriesSearch'){personSeriesQuery=e.target.value;updateFilterResults('personSeriesSearch');return}if(e.target.id==='followingSearch'){followingQuery=e.target.value;updateFollowingResults();return}if(e.target.id==='releasePersonSearch'){releasePerson=e.target.value.trim()||'all';const position=e.target.selectionStart;render();const input=document.getElementById('releasePersonSearch');input?.focus();input?.setSelectionRange(position,position);return}if(e.target.id==='watchedSearch'){watchedQuery=e.target.value;mediaPages.watched=0;updateFilterResults('watchedSearch');return}if(e.target.id==='search'){query=e.target.value;const clear=document.getElementById('clearExploreSearch');if(clear)clear.hidden=!query;clearTimeout(timer);timer=setTimeout(search,350)}});
+document.addEventListener('input',e=>{const clear=e.target.closest('.search-field')?.querySelector('.search-clear');if(clear)clear.hidden=!e.target.value;if(e.target.id==='sagaMovieSearch'){
+ sagaMovieQuery=e.target.value;
+ sagaMovieMatches=[];
+ const clearButton=document.querySelector('[data-saga-search-clear]');
+ if(clearButton)clearButton.hidden=!sagaMovieQuery;
+ document.getElementById('sagaMovieMatches')?.replaceChildren();
+ clearTimeout(sagaMovieTimer);
+ const query=sagaMovieQuery.trim(),seq=++sagaMovieSeq;
+ if(query)sagaMovieTimer=setTimeout(()=>searchSagaMovies(query,seq),300);
+ return;
+}if(e.target.id==='sagaSearch'){sagaQuery=e.target.value;clearTimeout(sagaSearchTimer);sagaSearchSeq++;sagaMatches=[];if(!sagaQuery.trim()){document.getElementById('sagaSearchFeedback')?.replaceChildren();return}sagaSearchTimer=setTimeout(searchSagaCollections,300);return}if(e.target.id==='suggestionMinYear'||e.target.id==='suggestionMaxYear'){if(e.target.id==='suggestionMinYear')suggestionMinYear=Math.min(Number(e.target.value),suggestionMaxYear);else suggestionMaxYear=Math.max(Number(e.target.value),suggestionMinYear);suggestionPage=0;document.getElementById(e.target.id==='suggestionMinYear'?'minYearOutput':'maxYearOutput').textContent=e.target.id==='suggestionMinYear'?suggestionMinYear:suggestionMaxYear;const bar=document.querySelector('.mq-range-selected');if(bar){bar.style.left=((suggestionMinYear-1900)/130*100)+'%';bar.style.right=(100-(suggestionMaxYear-1900)/130*100)+'%'}const counter=document.getElementById('mqFilterResultCount');if(counter)counter.textContent='les '+filteredResultCount()+' résultats';return}if(e.target.id==='listSearch'){listQuery=e.target.value;const target=document.getElementById('listResults');if(target){const all=sortedLists(),chosen=all.find(l=>l.id===listSelected),ids=chosen?(chosen.movieIds||[]):[...new Set(all.flatMap(l=>l.movieIds||[]))],tvIds=chosen?(chosen.tvIds||[]):[...new Set(all.flatMap(l=>l.tvIds||[]))];target.innerHTML=listTabMedia==='series'?seriesList(tvIds.map(id=>seriesCache.get(Number(id))||followedSeries().find(m=>m.id===Number(id))).filter(Boolean).filter(m=>matchesText(m.name,listQuery)),listView):filmList(ids.map(id=>filmCache.get(Number(id))).filter(Boolean).filter(m=>matchesMovieTab(m,listTabMedia)&&matchesText(m.title,listQuery)),listView)}return}if(e.target.id==='seriesSearch'){seriesQuery=e.target.value;clearTimeout(seriesSearchTimer);seriesSearchTimer=setTimeout(searchSeries,350);const clear=e.target.parentElement.querySelector('.search-clear');if(clear)clear.hidden=!seriesQuery;return}if(['personFilmSearch','castSearch','nowSearch','releaseSearch','queueSearch'].includes(e.target.id)){const id=e.target.id;if(id==='personFilmSearch')personFilmQuery=e.target.value;else if(id==='castSearch')castQuery=e.target.value;else if(id==='nowSearch')nowQuery=e.target.value;else if(id==='releaseSearch')releaseQuery=e.target.value;else{queueQuery=e.target.value;mediaPages.queue=0}const clear=e.target.parentElement.querySelector('.search-clear');if(clear)clear.hidden=!e.target.value;updateFilterResults(id);return}if(e.target.id==='personSeriesSearch'){personSeriesQuery=e.target.value;updateFilterResults('personSeriesSearch');return}if(e.target.id==='followingSearch'){followingQuery=e.target.value;updateFollowingResults();return}if(e.target.id==='releasePersonSearch'){releasePerson=e.target.value.trim()||'all';const position=e.target.selectionStart;render();const input=document.getElementById('releasePersonSearch');input?.focus();input?.setSelectionRange(position,position);return}if(e.target.id==='watchedSearch'){watchedQuery=e.target.value;mediaPages.watched=0;updateFilterResults('watchedSearch');return}if(e.target.id==='search'){query=e.target.value;const clear=document.getElementById('clearExploreSearch');if(clear)clear.hidden=!query;clearTimeout(timer);timer=setTimeout(search,350)}});
 async function openCard(target){if(!user)return;const scrollToDetailTop=()=>window.scrollTo({top:0,left:0,behavior:'instant'});if(target.dataset.openPerson){personFilmQuery='';selected=Number(target.dataset.openPerson);film=null;seriesId=null;personFilmRole='all';personMediaTab='films';render();const p=state.following[selected]||knownPeople.get(selected)||results.find(x=>x.id===selected)||currentPerson||{id:selected,role:'actor'};currentPerson=p;await loadPerson(p)}else if(target.dataset.openTv){seriesId=Number(target.dataset.openTv);selected=null;film=null;render();scrollToDetailTop();await loadSeries(seriesId);return}if(target.dataset.openFilm){castQuery='';film=Number(target.dataset.openFilm);selected=null;seriesId=null;error='';const pending=loadFilm(film);render();scrollToDetailTop();await pending}}
 document.addEventListener('click',async e=>{const calendar=e.target.closest('.mq-calendar-event[data-open-film],.mq-calendar-event[data-open-tv]');if(!calendar)return;e.preventDefault();e.stopImmediatePropagation();try{await openCard(calendar)}catch(err){error=err.message;render()}},true);
 document.addEventListener('click',async e=>{if(e.target.closest('button:not(.stat-person-link),a,input,select,label'))return;const card=e.target.closest('[data-open-person],[data-open-film],[data-open-tv]');if(!card)return;try{await openCard(card)}catch(err){error=err.message;render()}});
@@ -1000,6 +1078,11 @@ onAuthStateChanged(auth,u=>{
  seriesSeasonCache.clear();
  personSeriesCache.clear();
  sagaCache.clear();
+ pendingSagaMovies.clear();
+ clearTimeout(sagaMovieTimer);
+ sagaMovieSeq++;
+ sagaMovieQuery='';
+ sagaMovieMatches=[];
  if(!u){render();return}
  unsub=onSnapshot(doc(db,'users',u.uid,'data','movieQuest'),snap=>{
   if(user!==u)return;

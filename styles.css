@@ -1002,3 +1002,26 @@ input[type="search"]::-webkit-search-cancel-button{appearance:none;-webkit-appea
 @media(min-width:1130px){#app{--mq-library-columns:5}}
 @media(min-width:1360px){#app{--mq-library-columns:6}}
 #queueSearchResults,#watchedSearchResults{scroll-margin-top:16px}
+
+.mq-saga-summary .mq-saga-progress{
+ height:7px;
+ max-width:360px;
+ margin:12px 0 2px;
+}
+.mq-saga-movie-action{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ flex:none;
+ font-size:.82rem;
+}
+#sagaMovieMatches button[aria-disabled="true"]{
+ background:color-mix(in srgb,var(--accent) 7%,#27282e);
+ border-color:color-mix(in srgb,var(--accent) 26%,#3a3b42);
+ cursor:default;
+}
+.mq-saga-movie-action svg{width:16px;height:16px}
+@media(max-width:420px){
+ .mq-saga-movie-action{font-size:.75rem}
+ #sagaMovieMatches button{gap:8px}
+}
