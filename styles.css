@@ -126,7 +126,8 @@ header nav button[data-tab]::after{background:var(--accent)}
 .mq-tile.mq-movie .mq-meta{flex:1;gap:5px;padding:12px 13px 6px}
 .mq-tile.mq-movie .mq-meta h3{font-size:14px;line-height:1.3}
 .mq-tile.mq-movie .mq-actions{margin-top:auto;justify-content:center;align-items:center;padding:8px 8px 12px;gap:12px}
-.mq-tile.mq-movie .mq-art{aspect-ratio:3/3.8}
+.mq-tile.mq-movie .mq-art{aspect-ratio:2/3}
+.mq-tile.mq-movie .mq-art img{object-fit:contain}
 .mq-table .mq-row:hover{border-color:transparent}
 .explore-tools{display:flex;justify-content:flex-end;align-items:center;gap:12px;flex-wrap:wrap}
 .explore-tools .mode-switch{margin:0}
@@ -526,9 +527,6 @@ header nav button[data-tab]:hover{transform:translateY(-3px)!important}
 .queue-unified-toolbar .search-field{flex:1 1 240px;min-width:180px}
 .queue-unified-toolbar .random-film{order:2;white-space:nowrap}
 .queue-unified-toolbar .view-switch,.queue-unified-toolbar .mode-switch{order:3}
-.queue-load-more{display:flex;justify-content:center;padding:26px 0 12px}
-.queue-load-more button{background:#262d2a;border:1px solid #4a5750;border-radius:8px;padding:11px 19px;color:#e8eee9;font:inherit;cursor:pointer;transition:color .15s,border-color .15s,transform .15s}
-.queue-load-more button:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
 @media(max-width:620px){.queue-unified-toolbar .search-field{flex-basis:100%}.queue-unified-toolbar .following-controls.unified-filters{gap:8px}}
 
 /* Shared compact presentation for suggestion tabs and queue. */
@@ -995,3 +993,12 @@ input[type="search"]::-webkit-search-cancel-button{appearance:none;-webkit-appea
 @media(prefers-reduced-motion:reduce){
  .mq-loading-pulse i{animation:none}
 }
+
+
+#app{--mq-library-columns:2}
+.mq-grid.mq-library-grid{grid-template-columns:repeat(var(--mq-library-columns),minmax(0,1fr))}
+@media(min-width:680px){#app{--mq-library-columns:3}}
+@media(min-width:900px){#app{--mq-library-columns:4}}
+@media(min-width:1130px){#app{--mq-library-columns:5}}
+@media(min-width:1360px){#app{--mq-library-columns:6}}
+#queueSearchResults,#watchedSearchResults{scroll-margin-top:16px}
